@@ -177,3 +177,16 @@
    | backreferences | Y           | Y            | Y          | Y     | 
 
    Alternatiion using "|" is represented as "\|" in modren grep, gnu emacs.
+** Code Sample in python
+
+   #+BEGIN_SRC python
+     import re
+     patt = re.compile("^Subject: (.*)", re.IGNORECASE)
+     match = patt.search("Subject: Regarding leave application")
+     if match:
+         return match.group(1)
+   #+END_SRC
+
+   #+RESULTS:
+   : Regarding leave application
+   
