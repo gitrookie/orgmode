@@ -97,6 +97,10 @@
 
 
 
+** Internal Commands
+
+   git cat-file [-t -s -p] sha
+
 ** Settings for GitHub
    git remote add origin https://github.com/gitrookie/gitpoject.git
    -- gitrookie is username
@@ -143,6 +147,7 @@
 
    Git repo is collection of objects and system for naming those objects called
    refs.
-   Tree Object
-   blob object
-   commit object
+
+   1. Tree Object: mapping containig permissions, blob sha-1, filename.
+   2. blob object
+   3. commit object
