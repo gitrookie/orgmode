@@ -1,0 +1,179 @@
+
+* File Globs
+  pattern *.txt says select all files ending with .txt. With file nama pattern
+  like this (called file globs or wild cards) few character have special meaning.
+
+* Regular Expressions
+
+  Full regular expressions are composed of two types of characters. The special
+  characters (like "*") are called *metacharacters* while the rest are called
+  literals or noraml text characters. What sets regular expressions apart from
+  filename patterns are the advanced expressive powers that their meta character
+  provide.
+
+  ^cat should be read as follows:
+  /^cat matched if you have begining of line, followed immidiately by c,\
+  followed immidiately by a, followed immidiately by t. ^, $ matches position\
+  in a line rather actual text characters./
+
+** Character Classes
+
+   The *regex construct* [] usually called a character class.
+   with in the class the *character class metacharacter* '-' indcates range of
+   characters. [1-5], [c-h]. Multiple ranges are fine. [a-z1-9A-Z_!.?]. . and ?
+   are no longer meta characters inside character class i.e. they are not
+   character class meta characters. '-' is not considered character class meta
+   character if it is the first character listed in class. With in a class | is
+   a literal or normal character.
+
+*** Negated Character Class
+
+    [^  ] class matches any charcter that is not listed. it is character class
+    metacharacter only if it is immediately after class's opening bracket,
+    otherwise it is not special inside class.
+    Remember a negated character class means match a character that is not
+    listed.
+
+*** Matching any Character with dot or point.
+
+    "." Dot or point is shorthand for character class that matches any character
+    If we want to match 31-01-1984, 31/01/1984, 31.01.1984 we could construct a 
+    regexp like this 31[-./]01[-./]1984 or 31.01.1984
+    
+** Alternation - Matching any one of several subexpressions
+
+   Metacharacter | means "or". It allows you to combine multiple expressions
+   into a single expressions that matches any of the individual ones. For
+   example Bob and Robert are separate expressions, but Bob|Robert is one
+   expression that matches either. When combined this way, the subexpression
+   are called *alternatives*. Alternation reaches far but not beyon paranthesis.
+   gra|ey means match either gra or ey. gr(a|e)y means match a or e  i.e. match 
+   gray or grey. (,),| are all metacharacters.
+
+** Quantifier 1: Optional Characters ?
+
+   The metacharacter ? means optional. It is placed after the character or group
+   that is allowed to appear at that point in the expression, but whose 
+   existence isn't actually required to still be considered a successful 
+   match. Regex "colou?r" matches both "color" and "colour".
+
+** Quantifier 2: One or More +
+
+   One or more of immidiately proceeding item.
+
+** Quantifier 3: zero or More * (asterisk or star)
+
+   Try to match preceding item as many times as possible but its okay if nothing
+   is found.
+
+** Defined range of matches: intervals
+
+   metasequences for providing your own minimum and maximum called interval
+   qualifier.{3,12} matches up to 12 times the preceding item starting from
+   three.
+
+** Paranthesis and Backreferences
+
+   To find multiple occurences of word. Paranthesis "remember" the text that the
+   subexpression inside them matches and the speical metasequence \1 represents
+   text later in the regular expression, whatever it happens to be at the time.
+   "the the" matches \<([A-Za-z]+) +\1\>. \> and \< are the metasequences which
+   denote word boundaries.
+   
+** Perl RegEx
+
+   $var =~ m/regex/ attempts to match the given regular expression to the text
+   in the given variable, returns true or false appropriately.
+
+   $var =~ s/regex/replacement if regex is able to match somewhere in string
+   held by $var, the text actually matched is replaced by replacement. So
+   value of var is changed.
+
+   /g modifier instructs the s/../../ to continue trying to find more matches
+   and make more replacements after first substituton completes. When one
+   iteration ends, the next picks up the inspection of the text at the point
+   where the previous match ended.
+
+   m/../ m indicates a *match* is expected *slashes* delimit regex. Perl
+   requires @ to be escaped for its use in literals.
+
+   '\b\b' matches the word boundary but inside character class it matches the
+   backspace. *\s is shorthand for whole character class* that matches any white
+   space character i.e. *space, tab, newline, carriage* return.
+   *m/../i* here i is *modifier* which ignores case. i modifier is not part of
+   regex but part of m/../ syntactic packaging similar to grep's -i.
+
+   | \t | a tab character                     |
+   | \n | a newline character                 |
+   | \r | a carriage return                   |
+   | \s | matches any whitespace character    |
+   | \S | anything not \s                     |
+   | \w | [a-zA-Z0-9_] useful to match a word |
+   | \W | anything not \w [^a-zA-Z0-9_]       |
+   | \d | [0-9] a digit                       |
+   | \D | anything not \d [^0-9]              |
+
+   (?:...) non capturing paranthesis.
+
+   # Multiple files can be listed in command below
+   /perl -p -i -e 's/sysread/read/g' file1 file2 .../
+
+   Above command is full program to change every occurence of sysread to read
+   in every line of file.
+
+      | p | results in substituition done for every line of named file. |
+      | i | caused changes to be written back to file                   |
+      | e | indicates entire program is on command line                 |
+
+      /m modifier treats ^, $ to be logical line anchors.
+
+*** Substitution: Search and Replace
+
+*** Lookaround
+
+    Lookaround constructs are similar to word-boundary metacharacters like \b or
+    the anchors ^, $ in that they don't match text, but rather match positions
+    within the text. Lookaround doesn't consume text.
+
+    positive Lookahead: (?=...)
+    negative Lookahead: (?!...)
+    positive Lookaround: (?<=...)
+    negative Lookaround: (?<!...)
+
+** grep RegEx
+
+   \<\> matches word boundary.
+   grep takes a single logical line at a time and searches the regular
+   expression in that line. Therefore ^, $ denotes the logical start and end of
+   line respectively.
+
+** POSIX RegEx Flavor
+
+   POSIX distills the various common flavors into just two classes.
+   1. Basic Regular Expressions (BREs).
+   2. Extended Regular Expressions (ERE).
+
+   | Regex Feature                       | BREs          | EREs      |
+   |-------------------------------------+---------------+-----------|
+   | dot, ^, $, [ ], [^ ]                | Y             | Y         |
+   | "any number", quantifier            | *             | *         |
+   | + and ? quantifier                  |               | +?        |
+   | range quantifiers                   | \{min,max\}   | {min,max} |
+   | grouping                            | \(...\)       | (...)     |
+   | can apply quantifier to parantheses | Y             | Y         |
+   | backreferences                      | \1 through \9 |           |
+   | alternation                         |               | Y         |
+
+** RegEx Features in various tools.
+
+   | Feature        | Modern grep | Modern egrep | GNU Emacs  | Perl  |
+   |----------------+-------------+--------------+------------+-------|
+   | * ^ $ [...]    | Y           | Y            | Y          | Y     |
+   | ? +            | \? \+       | ? +          | ? +        | ? +   |
+   | grouping       | \(...\)     | (...)        | \(...\)    | (...) |
+   | (?:...)        |             |              |            | Y     |
+   | word boundary  |             | \<...\>      | \<\> \b \B | \b,\B |
+   | \w,\W          |             | Y            | Y          | Y     |
+   | backreferences | Y           | Y            | Y          | Y     | 
+
+   Alternatiion using "|" is represented as "\|" in modren grep, gnu emacs.
