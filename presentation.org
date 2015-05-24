@@ -1,0 +1,60 @@
+#+TITLE:     presentation.org
+#+AUTHOR:    Gaurav Sood
+#+EMAIL:     gaurav.sood031@gmail.com
+#+DATE:      2015-05-24 Sun
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [presentation]
+#+BEAMER_FRAME_LEVEL: 2
+
+#+BEAMER_HEADER_EXTRA: \usetheme{default}\usecolortheme{default}
+#+COLUMNS: %45ITEM %10BEAMER_env(Env) %10BEAMER_envargs(Env Args) %4BEAMER_col(Col) %8BEAMER_extra(Extra)
+#+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 :ETC
+
+
+* Introduction
+
+** Languages
+   1. Python
+   2. Haskell
+   3. Emacs-Lisp
+   4. Perl
+   5. C/C++
+      
+* Code Samples
+
+** Python
+
+#+BEGIN_SRC python
+  def foo():
+      print("Org Mode")
+#+END_SRC
+
+** Haskell
+#+BEGIN_SRC haskell
+  data Tree a = Node a (Tree a) (Tree b)
+              | Empty
+#+END_SRC
+
+** Two columns
+
+*** A block                                           :B_ignoreheading:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :BEAMER_col: 0.4
+    :END:
+    - this slide consists of two columns
+    - the first (left) column has no heading and consists of text
+    - the second (right) column has an image and is enclosed in an
+      @example@ block
