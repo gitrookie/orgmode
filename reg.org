@@ -180,7 +180,7 @@
    | backreferences | Y           | Y            | Y          | Y     | 
 
    Alternatiion using "|" is represented as "\|" in modren grep, gnu emacs.
-   
+
 ** Match Basics (4)
 
    Two types of engines.
