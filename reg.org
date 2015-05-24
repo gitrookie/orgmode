@@ -5,6 +5,9 @@
 
 * Regular Expressions
 
+  A regular expression is composed of subexpression. in regular expression "sab"
+  s, a , b are subexpressions respectively.
+
   Full regular expressions are composed of two types of characters. The special
   characters (like "*") are called *metacharacters* while the rest are called
   literals or noraml text characters. What sets regular expressions apart from
@@ -177,6 +180,35 @@
    | backreferences | Y           | Y            | Y          | Y     | 
 
    Alternatiion using "|" is represented as "\|" in modren grep, gnu emacs.
+   
+** Match Basics (4)
+
+   Two types of engines.
+   1. Non Determinstic Finite Automaton (NFA): grep GNU Emacs, Python, Perl
+
+   2. Determinstic Finite Automaton (DFA): awk, MySQL
+      - POSIX NFA
+      - Traditional NFA (most common).
+
+   There are two all encompassing rules which govern the way match is carried
+   out irrespective of regex engine used.
+
+   1. *The match that begins earliest wins (leftmost)*
+      *Summary:* if regex "fat|cat|belly|your" is matched against target string
+      "The dragging belly indicates your cat is too fat" we will get belly as
+      a successful match.
+
+   2. *The standard qunatifiers are greedy ("*", "?", "+", {m,n})*
+      *Summary:* The standard quantifiers settle for something less than the
+      maximum number of allowed matches if they have to, but they always attempt
+      to match as many times as they can up to that maximum allowed. The only
+      they settle for anything less than their maximum allowed is when matching
+      too much ends up causing some later part of the regex to fail.
+
+      for example "\b\w+s\b" is matched against "regexes".The subexpression
+      \w+ will be happy to match whole target string but then s will no longer
+      have a match. So \w+ leaves the s and matches "regexe" in order for match
+      to be successful.
 ** Code Sample in python
 
    #+BEGIN_SRC python
@@ -189,4 +221,3 @@
 
    #+RESULTS:
    : Regarding leave application
-   
