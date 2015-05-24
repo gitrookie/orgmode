@@ -95,6 +95,9 @@
 # deleted using above command
    git branch -d <branch_name>
 
+# creates <branch_name> from master and checkouts that branch
+   git checkout -b <branch_name> master
+
 
 
 ** Internal Commands
@@ -123,7 +126,8 @@
 ** Basic Concepts
 
    Everything in git is checksummed before it is stored and is then refeered to 
-   by checksum. (SHA-1 40 chars hexadecimal)
+   by checksum. (SHA-1 40 chars hexadecimal). Git has proprietary database.
+
    Git has three main states in which your file can reside
 
    1. Modified: we have changed the file.
@@ -152,3 +156,5 @@
    1. Tree Object: mapping containig permissions, blob sha-1, filename.
    2. blob object
    3. commit object
+
+   *Head* will be pointing to one of branches
