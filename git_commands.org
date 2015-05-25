@@ -78,6 +78,8 @@
 # list all the branches present in the repository. Highlights current 
 # branch we are in.
    git branch
+   git branch -r (Shows remote branches on server)
+   git branch -a (Show local and remote branches)
 
 # To switch between branches.   
    git checkout <branch_name>
