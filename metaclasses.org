@@ -19,7 +19,7 @@
 
   #+RESULTS:
   : None
-    
+
   Here we have used 3 argument form of the type built in function to
   dynamically create a class named MyKlass, inheriting from object with some
   attributes provide as arguments. This is equivalent to following code block.
@@ -82,9 +82,23 @@
 
       MyKlass = MyMeta.__new__(MyMeta, name, bases, dict)
       MyMeta.__init__(MyKlass, name, bases, dict)
+    #+END_SRC
 
+    #+BEGIN_SRC python
       class MyMeta(type):
           def __new__(meta, name, bases, dct):
-              print("---------------------------")
+              print("----------------------------")
+              print("Allocating memory for class", name)
+              print meta
+              print bases
+              print dct
+              return super(MyMeta, meta).__new__(meta, name, bases, dct)
 
+          def __init__(cls, name, bases, dct):
+              print("-------------------------------------------")
+              print("Initializing class", name)
+              print cls
+              print bases
+              print dct
+              super(MyMeta, cls).__init__(name, bases, dct)
     #+END_SRC
