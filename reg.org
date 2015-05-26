@@ -209,6 +209,8 @@
       \w+ will be happy to match whole target string but then s will no longer
       have a match. So \w+ leaves the s and matches "regexe" in order for match
       to be successful.
+** Regular Expression Patterns
+   1. s/(?<=.)(?=May \d\d)/\n/ig
 ** Code Sample in python
 
    #+BEGIN_SRC python
