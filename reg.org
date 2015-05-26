@@ -5,8 +5,8 @@
 
 * Regular Expressions
 
-  A regular expression is composed of subexpression. in regular expression "sab"
-  s, a , b are subexpressions respectively.
+  A regular expression is composed of subexpression or component. in regular 
+  expression "sa  s, a , b are subexpressions respectively.
 
   Full regular expressions are composed of two types of characters. The special
   characters (like "*") are called *metacharacters* while the rest are called
