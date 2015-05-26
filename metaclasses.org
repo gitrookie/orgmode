@@ -1,0 +1,104 @@
+* MetaClass in Python
+
+  In Python everything is an object and that include *classes*. Infact classes
+  in python are first class objects.They can be
+
+  - created at run time.
+  - passed as parameters.
+  - returned from functions.
+  - assigned to variables.
+
+  #+BEGIN_SRC python
+    def make_myklass(**kwattrs):
+	return type('MyKlass', (object,), dict(**kwattrs))
+
+    mklass_foo_bar = make_myklass(foo=2, bar=4)
+    x = mklass_foo_bar
+
+  #+END_SRC
+
+  #+RESULTS:
+  : None
+
+  Here we have used 3 argument form of the type built in function to
+  dynamically create a class named MyKlass, inheriting from object with some
+  attributes provide as arguments. This is equivalent to following code block.
+
+  #+BEGIN_SRC python
+    class MyKlass:
+	foo = 2
+	bar = 4
+  #+END_SRC
+
+  Every Object in python has a class (including builtins too). Python let us
+  examine class of an object with __class__ attribute.
+
+  #+BEGIN_SRC python
+    class Foo:
+	pass
+
+    return Foo.__class__
+  #+END_SRC
+
+  #+RESULTS:
+  : <class 'type'>
+
+** Metaclasses
+
+   MetaClass is defined as *class of class*. All classes whose instances are
+   themselves classes, is a metaclass. Metaclass is used to construct classes
+   in a way class is used to construct instance object.
+
+*** Under the hood
+
+    What python does, when it sees class definition.
+    - python executes it to collect the attributes (including attributes) into
+      a dictionary.
+    - When class definition is over, Python determines metaclass of the class.
+      lets call it Meta.
+    - Eventually, Python executes Meta(name, bases, dct), where
+      - Meta is the name of metaclass.
+      - name is the newly created class.
+      - bases is tuple of class's base's.
+      - dct maps attribute names to objects, listing all of classes attributes.
+
+    To determine the metaclass of a class
+    1. Look for __metaclass__ attribute defined for that class.
+    2. Or one of its bases will contain the __metaclass__ attribute.
+
+*** Metaclass's __new__ and __init__
+
+    To control the creation and initialization of class one can implement the
+    metaclass's __new__ and/or __init__ constructor. Most real life metaclasses
+    will probably override just one of them. __new__ should be implemented when
+    you want to control the creation of new object (class in our case), and
+    __init__ should be implemented when you want to control the initializaiton
+    of the new object (class in our case) and __init__ should be implemented
+    when you want to control the initialization of the new object after it has
+    been created.
+
+    #+BEGIN_SRC python
+      MyKlass = MyMeta(name, bases, dict)
+
+      MyKlass = MyMeta.__new__(MyMeta, name, bases, dict)
+      MyMeta.__init__(MyKlass, name, bases, dict)
+    #+END_SRC
+
+    #+BEGIN_SRC python
+      class MyMeta(type):
+          def __new__(meta, name, bases, dct):
+              print("----------------------------")
+              print("Allocating memory for class", name)
+              print meta
+              print bases
+              print dct
+              return super(MyMeta, meta).__new__(meta, name, bases, dct)
+
+          def __init__(cls, name, bases, dct):
+              print("-------------------------------------------")
+              print("Initializing class", name)
+              print cls
+              print bases
+              print dct
+              super(MyMeta, cls).__init__(name, bases, dct)
+    #+END_SRC
