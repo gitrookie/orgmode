@@ -209,8 +209,19 @@
       \w+ will be happy to match whole target string but then s will no longer
       have a match. So \w+ leaves the s and matches "regexe" in order for match
       to be successful.
-** Regular Expression Patterns
-   1. s/(?<=.)(?=May \d\d)/\n/ig
+
+   *Backtracking*
+   The essence of an NFA engine is this: it considers each subexpression or
+   component in turn and whenever it needs to decide b/w equally viable
+   options, it selects one and remembers the other to return to later if
+   need be.
+      
+** Examples of Regular Expression Patterns
+   1. s/(?<=.)(?=May \d\d)/\n/ig: Formatting log files.
+   2. <B>(((?!<\/?B>).)*)<\/B> extracts string "Billions" from the string
+      "<B>Billions</B> and <B>Zillions</B> of sums"
+   3. "[^"]*" matches "McDonalds" in string "The name \"McDonald's is said
+      \"makudonarudo\" in Japenese.
 ** Code Sample in python
 
    #+BEGIN_SRC python
