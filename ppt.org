@@ -1,0 +1,180 @@
+#+TITLE: Sample Presentation Using Org Beamer Emacs
+#+DATE:  2015-05-27 Wed
+#+AUTHOR: Gaurav Sood
+#+EMAIL: gaurav.sood031@gmail.com
+#+OPTIONS: ':nil *:t -:t ::t <:t H:2 \n:nil ^:t arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:t
+#+OPTIONS: e:t email:nil f:t inline:t num:t p:nil pri:nil stat:t
+#+OPTIONS: tags:t tasks:t tex:t timestamp:t toc:nil todo:t |:t
+#+CREATOR: Emacs 24.3.1 (Org mode 8.2.7b)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+
+#+LaTeX_CLASS_OPTIONS: [presentation, t]
+#+COLUMNS: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 0.0 :ETC
+
+
+#+BEAMER_THEME: Boadilla
+# #+BEAMER_THEME: AnnArbor
+
+# include navigation bars
+# #+BEAMER_THEME: Antibes
+
+# include a table of contents sidebar
+# #+BEAMER_THEME: Hannover
+
+# include a "Mini Frame Navigation"
+# #+BEAMER_THEME: Singapore
+
+# have the section and subsection titles at the top of each frame
+# #+BEAMER_THEME: Warsaw
+
+#+BEAMER_COLOR_THEME: crane
+
+#+LATEX_HEADER: \lstdefinelanguage{R}{}
+
+#+LATEX_HEADER: \definecolor{mylinkcolor}{HTML}{006DAF}
+#+LATEX_HEADER: \hypersetup{colorlinks=true, linkcolor=mylinkcolor, urlcolor=mylinkcolor}
+
+#+LATEX_HEADER: \usepackage{tikz}
+
+
+
+* Introduction
+
+** Functional vs Imperative
+
+*** Functional Languages				      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+    - *Lisp Family*
+    - Haskell
+    - Clojure
+
+*** Imperative Languages				      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+    - C/C++
+    - Python
+    - Perl
+
+*** Note							     :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+    Lisp Family is not strictly functional
+
+** Code Examples
+
+*** Haskell						      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+
+    #+BEGIN_SRC haskell
+      myLength xs = foldr (+) [] xs
+
+      myLength [1,2,3,4]
+    #+END_SRC
+    [[http://www.google.com][Google]]
+
+*** Python						      :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_env: block
+    :BEAMER_col: 0.5
+    :END:
+    #+BEGIN_SRC python
+      def foo():
+          print "Python"
+    #+END_SRC
+
+*** Haskell							:B_fullframe:
+    :PROPERTIES:
+    :BEAMER_env: fullframe
+    :BEAMER_opt: allowframebreaks,label=
+    :END:
+    - Type System
+    - Lazy Evaluation
+    - Monads
+    - Modularity
+    - Algebriac Data Types
+    - Compiled
+
+** ~alertblock~ environment
+
+*** An alert block					       :B_alertblock:
+    :PROPERTIES:
+    :BEAMER_env: alertblock
+    :END:
+    It is an alert to state
+
+** ~exampleblock~ environment
+   :PROPERTIES:
+   :END:
+
+*** An example Block					     :B_exampleblock:
+    :PROPERTIES:
+    :BEAMER_env: exampleblock
+    :END:
+    This is an example block
+
+** ~beamercolorbox~ environment
+
+#+Latex: \setbeamercolor{myblockcolor}{bg=magenta,fg=white}
+
+*** myblockcolor					   :B_beamercolorbox:
+    :PROPERTIES:
+    :BEAMER_env: beamercolorbox
+    :BEAMER_opt: wd=6cm
+    :END:
+    This is beamer box
+
+** ~structureenv~ environment
+
+*** structureenv					     :B_structureenv:
+    :PROPERTIES:
+    :BEAMER_env: structureenv
+    :END:
+    This is structure environment
+
+** Overlay specification1
+
+   #+ATTR_BEAMER: :overlay <+->
+   - Haskell
+   - Clojure
+   - EmacsLisp
+
+** Overlay specification2
+
+   - @@b:<1->@@ C/C+++
+   - @@b:<2->@@ Python
+** Overlay Specifications3
+   - <1-| alert@1> Suppose /p/ were the largest prime number.
+   - <2-> Let /q/ be the product of the first /p/ numbers.
+   - <3-> Then /q + 1/ is not divisible by any of them.
+   - <1-> But /q + 1/ is greater than /1/, thus divisible by some prime number
+     not in the first /p/ numbers.
+** Overlay Specification4
+   - Test ::
+	    of a *@@beamer:<2->@@useful* feature!
+
+    - *@@beamer:<2->@@Test 2* ::
+	 of the same feature
+** Overlay Specifications5
+   :PROPERTIES:
+   :BEAMER_act: <1->
+   :END:
+*** Books Reading
+   - SICP
+   - Real World Haskell
+   - Regular Expressions
