@@ -143,6 +143,11 @@
     positive Lookaround: (?<=...)
     negative Lookaround: (?<!...)
 
+*** Atomic Grouping / Possessive Quantifier
+(?>...) once a greedy quantifier matches and the subexpression exits in regular
+expression, the saved states are deleted. This feature can be used to write 
+faster regular expressions
+
 ** grep RegEx
 
    \<\> matches word boundary.
