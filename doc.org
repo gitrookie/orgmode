@@ -1,0 +1,40 @@
+#+STARTUP: overview
+#+DRAWERS: hidden
+
+* Document Structure (2)
+  Org mode built on top of outline mode. Allows document to be organized in
+  hirearchical mode. *Headlines* define structure of an outline tree, starts
+  with one or more stars. /Org can reason about the structure of document/.
+** Visibility Cycling
+   ~TAB~ (sub-tree cycling) and ~S-TAB~ or ~C-u TAB~(global cycling) 
+   are used for visibility cycling.
+   ~C-u C-u TAB~ (~org-set-startup-visibility~) restores startup visibility of 
+   buffer.
+   ~C-u C-u C-u TAB~ (~show-all~) show all including drawers.
+   Initial visibility can be set on per file basis by adding the following
+   where in the document.
+** Motion
+** Structure Editing
+** Sparse Trees
+** Plain Lists
+   * Unordered List Items start with ~-~, ~+~ or ~*~ as bullets
+   * Ordered List Items starts with ~1.~ or ~1)~.
+   * Description List Items are unordered list items, contain separator
+     ~::~ to distinguish the description term from the description.
+   * ~C-c *~ turns a list item into sub heading.
+   * ~C-c C-* makes whole list into sub heading.
+   * ~S-left/right cycles bullet styles.
+** Drawers
+   Sometimes you want to keep information associated with an entry, but normally
+   you don't want to see it. For this org mode has drawers. Looks like this.
+   :PROPERTIES:
+This is under drawer
+:END:
+   Example of ~PROPERTIES~ drawer.
+   We can define *user defined drawers as defined on top of this file and used
+   below.
+** Blocks
+   Org mode uses begin...end for various purposes like including source code.
+** TODO Footnotes
+
+* Tables

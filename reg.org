@@ -53,6 +53,13 @@
    gra|ey means match either gra or ey. gr(a|e)y means match a or e  i.e. match 
    gray or grey. (,),| are all metacharacters.
 
+*** Importance Ordering in Alternation
+
+    Consider matching ~Jan (0?[1-9]|[12][0-9]|3[01])~ against "Jan 31".
+    Here the actual match obtained captured by paranthesis is 3, as 31 will
+    match the the component ~0?[1-9]~. Whole string "Jan 31" can be matched
+    by changing the ordering as in ~Jan ([12][0-9]|3[01]|0?[1-9])
+
 ** Quantifier 1: Optional Characters ?
 
    The metacharacter ? means optional. It is placed after the character or group
@@ -69,6 +76,7 @@
    Try to match preceding item as many times as possible but its okay if nothing
    is found.
 
+** TODO Lazy Quantifier
 ** Defined range of matches: intervals
 
    metasequences for providing your own minimum and maximum called interval
