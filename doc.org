@@ -22,8 +22,8 @@
    * Description List Items are unordered list items, contain separator
      ~::~ to distinguish the description term from the description.
    * ~C-c *~ turns a list item into sub heading.
-   * ~C-c C-* makes whole list into sub heading.
-   * ~S-left/right cycles bullet styles.
+   * ~C-c C-*~ makes whole list into sub heading.
+   * ~S-left/right~ cycles bullet styles.
 ** Drawers
    Sometimes you want to keep information associated with an entry, but normally
    you don't want to see it. For this org mode has drawers. Looks like this.
@@ -37,4 +37,83 @@ This is under drawer
    Org mode uses begin...end for various purposes like including source code.
 ** TODO Footnotes
 
-* Tables
+* Tables (3)
+  Any line with '|' as first non white space character is considered part
+  of table.
+  #+NAME: Records
+  | Name   |  Phone | Age |
+  |--------+--------+-----|
+  |        |    <6> |     |
+  | Gaurav | 9632714987 |  31 |
+  | Mukta  | 8971945413 |  31 |
+  | Mukta  | 8971945413 |  32 |
+  | Mukta  | 8971945413 |  33 |
+  |        |        |  34 |
+
+  ~C-c |~ converts *active region* to table. If there is no active region it
+  creates empty table.
+  ~C-c C-c~ realign table and don't move to another field.
+  ~TAB~ moves to next field ~S-TAB~ moves to previous field.
+  ~M-S-left~ kills current column.
+  ~M-right/M-left~ moves current column right/left.
+  ~M-up/M-down~ moves current row up/down.
+  ~S-RET~ when current field is empty copies the non empty field above.
+  if current field is non empty creates, create a new row and copy that
+  field into new row's field.
+
+  |   | <3> |
+  | 1 | one |
+  | 2 | two |
+  | 3 | This is long chunk |
+  |   |     |
+
+* Hyperlinks (4)
+
+  [[http:www.google.com][Google]]
+  
+  Above link can be edited with ~C-c C-l~.
+
+  If the link doesn't look like url, it is internal link in the current file.
+  The most important case in link [[#mycustom-id]] which will link to the entry
+  with ~CUSTOM_ID~ property 'my-customid'. You are responsible to make sure
+  these id's are unique inside document. [[id:Records][Records]] will take to table under
+  headline 3.
+
+* Tags (5)
+
+  An excellent way to implement labels and contexts for cross relating
+  information is to assign *tags to headlines*. Every headline can contain
+  list of tags; they occur at the end of headline. Tags must be preceded by
+  colons. We can assign tags in following way ~:user:work:. Tags by default
+  will be bold face with same color as headline.
+
+** Tag Inheritance						       :work:
+
+   Tags use hirearchical structure of outline trees. if a heading has certain
+   tag all sub headings will inherit that tag.
+   We can also set tags that all entries should inherit using the following
+   ~#+FILETAGS: :work:master:job~
+   ~C-c C-q~ can be used to tag a headline.
+   We can set a list of default tags for a given file to be use
+   ~TAGS: @work @master~
+   ~TAGS: work master~
+   ~C-c /~ search for tags.
+
+* Properties (7)
+
+  A property is key value pair associated with an *entry*. Properties can be set
+  so they are associated with single entry, with every entry is tree, or with
+  every entry in an org file.
+  There are two main applications of properties
+  1. These are tags but with value.
+  2. It helps us to implement database capabilities in org mode file.
+** Property Syntax
+   :PROPERTIES:
+   :CUSTOM_ID: abc
+   :END:
+   When the are associates with a single entry or with a tree they need
+   to be inserted into a special drawer called ~:PROPERTIES:~.
+   To set up property inherited by every entry of org mode file
+   ~#+PROPERTY: ~
+   ~C-c C-x p~ to set a property. if necessary drawers are created as well.x
+

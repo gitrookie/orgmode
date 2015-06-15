@@ -34,7 +34,7 @@
 # have the section and subsection titles at the top of each frame
 # #+BEAMER_THEME: Warsaw
 
-#+BEAMER_COLOR_THEME: crane
+#+BEAMER_COLOR_THEME: whale
 
 #+LATEX_HEADER: \lstdefinelanguage{R}{}
 
@@ -178,3 +178,6 @@
    - SICP
    - Real World Haskell
    - Regular Expressions
+** Images
+file:dot.png
+# \pgfuseimage{myfigure}
