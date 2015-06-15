@@ -1,0 +1,4 @@
+* /etc/apt/sources.list
+  Contains the location of package/repo info on ubuntu servers.
+
+* Bash Tips

@@ -1,0 +1,123 @@
+* Editing
+  Undo-> C-/
+  Removing whitespace after point-> M-\
+  M-- M-l converts last word to lower case.
+  M-- M-u converts last word to upper case.
+  M-- M-c converts last word to lower case but initial word capitalize.
+* Search
+  1. Typing M-c within an incremental search toggles the case sensivity of that
+     search.
+  2. 
+* Basic Concepts
+  Text between /point/ and /mark/ is called /region/. Setting a mark also
+  activates it.When mark is active we say region is active;Emacs indicate it by
+  highlighting the text within it. After certain non motion commands, including
+  any command that changes the text in the buffer, Emacs automatically deactiv-
+  ates the mark;this turns off highlighting. You can explicitly deactivate the
+  mark at any time by typing C-g. The above behavior is known as Transient
+  Mark Mode. Disabling transient mark mode switches Emacs to an alternative
+  behavior, is which region is usually not highlighted.
+* Registers
+  Emacs /registers/ are compartments where you can save text, rectangles
+  positions and other things.
+  Each register has a name that consist of a single character, which we
+  will denote by r;r can be a letter, number. Case matters 'a' is not 'A'.
+  To view the contests of register
+
+  ~M-x view-register RET r~
+
+** Saving position in Registers
+   ~C-x r SPC r~ saves the current position and buffer.
+   ~C-x r j r~ jumps to saved position and buffer.
+** Saving Rectangles in Registers
+   ~C-x r r r~ saves rectangle in register r.
+   ~C-x r i r~ insert the rectangle stored.
+** Saving File Names in registers.
+   #+BEGIN_SRC emacs-lisp
+     (set-register ?a `(file . "/var/log/syslog"))
+   #+END_SRC
+
+   #+RESULTS:
+   : (file . /var/log/syslog)
+   To save the file name in register a run the above code.
+   This can be useful if you want to visit some particular files regularly.
+** Saving text in registers
+   ~C-x r s A~ saves text in register A.
+   ~C-c r i A~ inserts text from register A.
+** Saving window configuration in registers.
+   ~C-x r w r~
+* Interactive Highlight Font Lock
+  ~M-x highlight-changes-mode~ highlights the part of buffer that changed
+  recently.by giving text a different face
+* Word-Line-Sentences
+** Words
+   ~M-f~ Moves forward over a word.
+   ~M-b~ Moves backward over a word.
+   ~M-d~ Kill upto end of word.
+   ~M-DEL~ Kill back to begining of word.
+   ~M-@~ Mark the end of next word.
+   ~M-t~ Transpose two words.
+** Lines
+   ~M-a~ Moves back to begining of sentence.
+   ~M-e~ Moves forward to end of sentence.
+   ~M-k~ Kill forward to end of sentence.
+   ~C-x DEL~ Kill back to begining of sentence.
+   ~C-x C-o~ delete but one of many consecutive blank lines.
+** Paragraph
+   ~M-{~ Move to previous paragraph begining.
+   ~M-}~ Move forward to next paragraph end
+   ~M-h~ Put point and mark around this or next paragraph.
+** Pages
+   ~C-x [~ Moves point to previous page boundary.
+   ~C-x ]~ Moves point to next page boundary.
+   ~C-x C-o~ Put point and mark around this page.
+* ~(global-auto-revert-mode 1)~ 
+  will automatically shows recent changes in buffer.
+  ~M-S ^~ joins two lines (cursor at begining of second line).
+* Hooks
+  A hook is a lisp variable which holds list of fucntions, to be called on well
+  defined occasions.(This is called running a hook).The individual functions in
+  the list are called hook functions of hook. For example hook ~kill-emacs-hook~
+  runs before exiting Emacs.
+  Most hooks are /normal hooks/. This means when Emacs run hook, it calls each
+  function in turn, with no arguments. Every variable whose name ends in
+  '~-hook~' is a normal hook.
+  A few hooks are abnormal hooks. Their name ends in '~-functions~, instead of
+  '~-hook~'.
+  One can set hook variable with setq like any other lisp variable, but
+  way to add a fucntion to hook is to use ~add-hook~.
+  Most major mode run one or more /mode hooks/ as last step of initialization.
+  Mode hooks are convienent way to customize the behavior of individual modes.
+  they are always normal.
+* Scrolling
+  ~C-v~ PageDown scrolls downward nearly whole window height.
+  ~M-v~ PageUp scrolls upwards neary whole window height
+  ~M PageUp~ scrolls in another window.
+  ~M PageDown~ scrolls in another window.
+** Centering
+   ~C-l~ takes current line to center of the window.
+** Resizing Windows
+   ~C-x }~ makes window wider.
+   ~C-x {~ makes window narrower.
+   ~C-z z~ repeatedly.
+   ~C-x +~ balance windows
+** Repeating a Command
+   ~C-x z~ repeats the previous command. Typing z's repeat commands again and
+   again.
+** Numeric Arguments to Commands
+   Any command in emacs can be given a numeric argument. Some commands interpret
+   the given argument as numeric count.
+   The easiest way to specify numeric argument is with Meta key.
+   ~M-5 C-n~ moves five lines down.
+   ~C-u~ can mean end of prefix argument or means 4 times.
+   ~C-u C-f~ moves forward four characters.
+** Help
+   ~C-h k key~ tells what a key does.
+** Narrowing
+   Focuses on selected part of buffer making other region unavailable
+   temporary. 
+   ~C-n n n~ Narrow between point and mark
+   ~C-n n w~ Makes entire buffer accessible again.
+   ~C-x n p~ Narrow down to current page.
+   ~C-x n d~ Narrow down to current defun
+
