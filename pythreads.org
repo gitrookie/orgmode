@@ -1,0 +1,90 @@
+* Process Virtual Machines OR Application Virtual Machine OR Managed Run Time Environment
+  A process VM runs as normal application inside a host OS and supports a single
+  process It is created when program is started and destroyed when it exits. Its
+  purpose is to provide a platform independent programming environment that
+  abstracts away the details of the underlying hardware or operating system. and
+  allows program to execute in the same way on any platform.
+  *Process VMs are implemented using an interpreter*; performance comparable to
+  compiled programming languages is achieved by the use of just in time
+  compilation 
+  Process Virtual Machine are designed to execute a single computer program by
+  providing an abstract and platform independent program execution environment.
+* Stack Machines
+  In computer science, computer engineering and in programming language
+  implementations a *stack machine* is a real or emulated computer that uses a
+  pushdown stack rather than individual registers to evaluate each subexpression
+  in the program. A stack computer is programmed with a reverse Polish notation
+  instruction set.
+* Global Interpreter Lock (GIL)
+  The GIL is used internally to ensure that only one thread runs in the Python
+  VM at a time. In general Python offers to switch among threads only between
+  bytecode instructions; how frequently it switches can be set via
+  *sys.setcheckinterval*. Each bytecode instruction and therefore all the C
+  implementation code reached from each bytecode instruction is therefore atomic
+  from the point of view of a Python program.
+
+  Following operations are all atomic(L, L1, L2, are lists, D* are dictionaries,
+  x, y are objects, i, j are ints)
+
+  - L.append(x)
+  - L1.extend(L2)
+  - x = L[i]
+  - x = L.pop()
+  - L1[i:j] = L2
+  - L.sort()
+  - x = y
+  - x.field = y
+  - D[x] = y
+  - D1.update(D2)
+  - D.keys()
+  These operations are not atomic
+  - i = i + 1
+  - L.append(L[-1)
+  - L[i] = L[j]
+  - D[x] = D[x] + 1
+  
+* Python Threads
+  Consider the following Python Code
+
+  def process_item(item):
+      global counter
+      # do something with item
+      counter += 1
+
+  if you call this function from more than one thread, you will find the counter
+  is not necessarily accurate. It works in most of cases, but sometimes misses
+  one or more items. The reason for this is that increment operation is actually
+  executed in three steps; fist the interpreter fetches the current value of the
+  counter, then it calculates the new value, and finally, it writes the new
+  value back to the variable.
+  If another thread gets control after the current thread has fetched the
+  variable, it may fetch the variable, increment it, and write it back, before
+  the current thread does the same thing. And since they are both seeing the
+  same original value, only one item will accounted for.
+
+  Another problem is access to *incomplete or inconsistent state *, which can
+  happen if one thread is intializing or updating some non-trivial data
+  structure and another thread attempts to read the structure while its being
+  upated.
+** Atomic Operations
+   The simplest way to synchronize access to shared variables or other resources
+   is to rely on atomic operations in the interpreter. An atomic opration is an
+   operation that is carried out in a single execution step without any chance
+   that another thread gets control.
+
+   In general this approach only works if the shared resource consists of a
+   single instance of a core data type, such as string variable, a number, or a
+   list or dictionary. Here are some thread-safe operations:
+
+   1. reading or replacing a single instance attribure
+   2. reading or replacing a single gloable variable
+   3. fetching an item from a list
+   4. modifying a list in place (e.g. adding and item using append)
+   5. fetching an item from a dictionary
+   6. modifying a dictionary in place (e.g. adding an item, or calling clear
+      methods)
+** Locks
+   Most fundamental synchronization mechanism. At any time lock can be held by
+   single thread or no thread. If a thread attempts to hold a lock that's
+   already held by some other thread, execution of the first thread is halted
+   until the lock is released.

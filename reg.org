@@ -10,21 +10,21 @@
 
   Full regular expressions are composed of two types of characters. The special
   characters (like "*") are called *metacharacters* while the rest are called
-  literals or noraml text characters. What sets regular expressions apart from
+  *literals or normal* text characters. What sets regular expressions apart from
   filename patterns are the advanced expressive powers that their meta character
   provide.
 
   ^cat should be read as follows:
-  /^cat matched if you have begining of line, followed immidiately by c,\
-  followed immidiately by a, followed immidiately by t. ^, $ matches position\
-  in a line rather actual text characters./
+  ^cat matches if you have beginning of line, followed immediately by c,
+  followed immidiately by a, followed immediately by t. ^, $ matches position
+  in a line rather actual text characters.
 
 ** Character Classes
 
    The *regex construct* [] usually called a character class.
    with in the class the *character class metacharacter* '-' indcates range of
-   characters. [1-5], [c-h]. Multiple ranges are fine. [a-z1-9A-Z_!.?]. . and ?
-   are no longer meta characters inside character class i.e. they are not
+   characters. [1-5], [c-h]. Multiple ranges are fine. [a-z1-9A-Z_!.?]. "." and
+   "?" are no longer meta characters inside character class i.e. they are not
    character class meta characters. '-' is not considered character class meta
    character if it is the first character listed in class. With in a class | is
    a literal or normal character.
