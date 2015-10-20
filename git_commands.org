@@ -53,6 +53,13 @@
 # Shows the difference between commited file and staged file
    git diff --cached <filename>
 
+# Shows the difference between local branch master and remote-tracking branch
+# master.
+   git diff master origin/master
+
+# Shows the diff between a file on different branches
+   git diff <branch1> <branch2> -- <filename>
+
 # remove extra details
    git log --oneline
    git log --format=raw
@@ -62,6 +69,35 @@
 
 # what has been modified shorthand (remove extra details)
    git status -s
+
+# Remove the specified file from staging area, but leave the working directory
+# unchanged. This unstages a file
+   git reset <file>
+
+# Reset the staging area to match the most recent commit, but leave the working
+# directory unchanged. This unstages all the files without overwriting any
+# changes gives us the opportunity to rebuild the staged snapshot from scratch.
+   git reset
+
+# Reset the staging area and working directory to match the most recent
+# commit. In addition to unstaging changes, the --hard flag tells git to
+# overwrite all changes in the working directory, too.
+   git reset --hard
+
+# Move the current branch tip backward to <commit>, reset the staging area to
+# match the <commit>, but leave the working directory alone. All changes made
+# since <commit> will reside in the working directory., which lets you re-commit
+# the project history using cleaner more atomic snapshots
+   git reset <commit>
+
+# Similar to above git reset <commit> but also resets the working directory to
+# match.
+   git reset --hard <commit>
+
+# Removes Untracked files. It is equivalent to inspecting the working directory
+# with git status and removing untracked files with "rm". "git reset" works only
+# on tracked files.
+   git clean
 
 # suppose we committed something to repository and later we realized that we 
 # dont want that changes. Above comman will revert the changes in local 
@@ -75,28 +111,43 @@
 # to unstage (git status will show again the file in red color from green)
    git reset HEAD <file>
 
-# list all the branches present in the repository. Highlights current 
+# list all the local branches present in the repository. Highlights current 
 # branch we are in.
    git branch
 
-# To switch between branches.   
+# List all the branches (local and remote-tracking) branches.
+   git branch -a
+
+# List only remote tracking branches
+   git branch -r
+
+# To switch between local branches.
    git checkout <branch_name>
 
 # Creates a branch named iss53. When branching its better to have things clean. 
    git branch <branch_name>
 
-# Creates a brach named <branch_name> and switches to it. 
+# Creates a branch named <branch_name> and switches to it. 
    git checkout -b <branch_name>
 
-# Merges <branch_name> with master
+# Merges local branch <branch_name> with master
    git merge <branch_name>
 
-# After the branch <branch_name> has been merged with master it can be 
+# After the local branch <branch_name> has been merged with master it can be 
 # deleted using above command
    git branch -d <branch_name>
 
-# creates <branch_name> from master and checkouts that branch
+# creates local branch <branch_name> which is copy of local branch master and
+# checkouts <branch_name>
    git checkout -b <branch_name> master
+
+# To update remote-tracking branch
+   git fetch <branch_name>
+
+# To work on remote-tracking branch. Following will create a local branch named
+# "refactored" which will be copy of the remote-tracking branch
+# "origin/refactored" 
+   git checkout --track -b refactored origin/refactored
 
 
 
@@ -109,19 +160,23 @@
    git remote add origin https://github.com/gitrookie/gitpoject.git
    -- gitrookie is username
    -- gitproject is name of project
-   
+
    git push origin master
    -- push contents of master branch to repository at GitHub
-   
+
    git push origin <branch_name>
    -- push contents of <branch_name> to repository at GitHub
-   
+
    git clone https://github.com/gitrookie/gitpoject.git 
    -- copy the whole repository from GitHub
-   
-   git push origin --delete <branch_name>
-   -- Delte the branch from github which has been deleted from the local repository.
 
+   git push origin --delete <branch_name>
+   -- Delte the branch from github which has been deleted from the local
+   repository.
+
+# If we want to push to repo which has different name in the remote repository
+# then we can do the following
+   git push origin experimental:experminet-by-bob
 
 ** Basic Concepts
 
@@ -158,3 +213,13 @@
    3. commit object
 
    *Head* will be pointing to one of branches
+
+*** Branches
+    There are two types of branches
+    1. Local Branches
+    2. Remote-tracking branches
+
+** Git Internals
+   Branches are directed acyclic graphs. Also they are name of particular commit
+   and all the commits that are ancestors of it, so each branch is completely
+   defined by the SHA1sum of the commit at the tip.
