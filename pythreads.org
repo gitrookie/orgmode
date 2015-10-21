@@ -1,3 +1,17 @@
+* Primitives
+  Concurrency Primitives provided by OS are *Processes* and *Threads*
+   In Linux clone() system call is used to create both process and threads; the
+   function is used to invoke with different options for each.
+   A new thread will not only share the memory of its parent process, but also
+   share file descriptors, file system context and signal handling.
+** Two Approaches to Concurrent Programming
+   1. Shared Memory
+      The program is designed for two or more threads to read from and write to
+      same block of memory.
+   2. Message Passing
+      In message passing approach any chunk of memory is only accessed by single
+      thread. When two or more threads need to synchronize, interact or
+      communicate, data is sent from one another.
 * Process Virtual Machines OR Application Virtual Machine OR Managed Run Time Environment
   A process VM runs as normal application inside a host OS and supports a single
   process It is created when program is started and destroyed when it exits. Its
@@ -88,3 +102,17 @@
    single thread or no thread. If a thread attempts to hold a lock that's
    already held by some other thread, execution of the first thread is halted
    until the lock is released.
+
+   But Locks doesn't care which thread is holding lock. If a thread holding a
+   lock tries to reacquire same lock it will block. To rectify this we have
+   re-entrant locks.
+** Semaphores
+** Nature of threads in Python
+   The threads when we talk in general are OS threads. This is what we get when
+   writing an application in C, if you call pthread_create(Linux) or
+   CreateThread(Windows). It is real thread allocated and managed by operating
+   system kernel. In modern Python we start a thread by creating an instance of
+   threading. Thread the invoke its start() method. A started thread indeed
+   allocates a separate OS thread. Two OS thread can run at the same time fully
+   utilizing two CPU cores but CPython implementation doesn't allow to run two
+   threads parallely.
