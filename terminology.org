@@ -1,0 +1,12 @@
+* Wire Level Protocol
+  A wire level protocol can be thought of as the complement of an API. Instead
+  of defining functions and creating libraries, you define the conversational
+  byte sequence that pass over a network to make things happen.
+
+  When a protocol is specified at the wire-level and published, most
+  technologies can use it, or be made to use it. Compare this to an API, where
+  the actual implementation is specific to the platform.
+* System Calls
+  Transfers control from an application to subsystems managed by kernel. Since
+  those subsystems are shared by multiple processes one must cross boundary from
+  user into kernel space in order to work with them.

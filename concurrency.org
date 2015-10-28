@@ -1,0 +1,12 @@
+* Concurrency
+  General Ideas
+** Message Passing
+   The big idea is messaging - how models communicate not how models are
+   internally represented.
+** Event Loops
+   Most Event Loops will block if there are no events ready, which means the
+   operating system will not give the task any execution time until an event
+   happens 
+*** Event Generators
+*** Event Dispatchers
+*** Event Processors

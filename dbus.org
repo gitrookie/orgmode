@@ -1,0 +1,118 @@
+* Dbus
+
+  DBus is an IPC and RPC mechanism that allows communication between multiple
+  programs. i.e. processes running concurrently on same machine.
+  *Dbus is a specification* and it also provides a *reference implemenation* in
+   the form of *libdbus*. The library libdbus is often confused with DBus
+  itself. Other implementations of dbus exists such as GDBus, QtDbus, sd-dbus
+  etc. It also allows communication between the desktop session and the
+  operating system, which typically includes kernel and system daemons and
+  processes. DBus provides additional or simplifies existing functionality to
+  the applications, including information sharing modularity and privilge
+  separation. For example information on an incoming voice call received through
+  Bluetooth or Skype can be propagated and interpreted by an currently running
+  music player, which can react by muting the volume or pausing playback until
+  call is finished.
+
+  Most systems implement a privilged /system channel/, together with a /private
+  channel/ for each logged-in user, so that available information in DBus can be
+  restricted. Accordingly, the DBus service included both a system daemon (for
+  events such as new hardware device added or printer queue changed) and
+  distinct daemon for each user login session (for general IPC between processed
+  started by user in that particular session). Application communicate with
+  daemon over *Unix Domain sockets*. The message bus is built on top of general
+  one to  one message passing framework which two applications can also use to
+  communicate directly and without going through the message bus daemon.
+
+  DBus uses logical Bus over which connected applications may communicate. For
+  ease of use the communication takes place via a simple object model that
+  supports both RPC and publish subscribe mechanism. Applications connected to
+  bus may query for the avaliability of objects call remote methods on them and
+  request notifications of the signals they emit.
+** Applications
+   Firefox automatically turned to offline mode when your internet  connection
+   is down. Ever wondered how this happens. This is because the NetworkManager
+   app talks to firefox using a back end utility called D-Bus to update it on
+   the status of the internet connection.
+** Session Bus
+   The daemon that is attached to each user session is called *SessionBus*.
+** DBus Service
+   Every application that intends to share its objects and methods are started
+   as DBus services. A DBus enabled application exports its object with their
+   functionalities as methods that other application can use.
+
+* Key Components
+** Object Paths
+   DBus objects are identified within in an application via their object
+   paths. The object path serves as an unique identifier for an object. The
+   hirearchy implied the path structure in purely conventional. Applications
+   with naturally hirearchical structure will likely take the advantage of this
+   feature while others may choose to ignore it completely.
+** Interfaces
+   It is named group of methods and signals.
+   DBus interface defines the method and signal supported by DBus objects. In
+   order to make use of interface it must be known to users. It may be hardcoded
+   into application  or queried at run time through DBus introspection
+   mechanism. Although technically optional DBus implementations automatically
+   provide introspection support for the objects they export.
+** TODO Methods
+** Signals
+   Unlike methods signals are entirely asynchronous and may be emitted by dbus
+   objects at any time.
+** Bus Names
+   There are two types of bus names: *unique* and *well-known*. Unique bus names
+   are assigned to each client upon connection. They begin with : and they are
+   gauranteed to be never used again during bus life time. DBus clients may
+   request additonal well known bus names. For example Gnome Network Manager
+   offer its services on well-known bus name /org.freedesktop.Network Manager/.
+** Message Routing
+** Connecting to DBus
+   Application that use DBus connect to bus daemon, which forward message
+   between application.To use dbus you need to create a Bus object representing
+   the connection to bus daemon. To connect to Session Bus create a session bus
+   object.
+   #+BEGIN_SRC python
+import dbus
+session_bus = dbus.SessionBus()
+   #+END_SRC
+
+   Similarly we can connect to SystemBus by creating a SystemBus object. We can
+   connect to both the buses in same application.
+** Making Method Calls
+   1. Bus Name identifies the application you want to communicate with.
+   2. Object Path identifies the object we can interact with. Applications can
+      export many objects. For example word processor can export an object
+      representing the application itself, it can export an additional object
+      representing document window.
+*** Proxy Objects
+    To interact with remote object, you use proxy object. This is python object
+    which acts as a proxy or stand-in for the remote object-when you call a
+    method on proxy object, this causes dbus-python to make a method call on the
+    remote object, passing back return values from the remote object's method as
+    the return values of the proxy method call.
+
+    To obtain a proxy object, call the get_object method on the ~Bus~. For
+    example NetworkManager has the well known bus name
+    org.freedesktop.NetworkManager and exports an object whose path is
+    /org/freedesktop/NetworkManager, plus an object per network interface at
+    object paths like /org/freedesktop/NetworkManager/Devices/eth0. You can get
+    proxy of object representing eth0 like this.
+
+    #+BEGIN_SRC python
+import dbus
+bus = dbus.SystemBus()
+proxy = bus.get_object('org.freedesktop.NetworkManager', '/org/freedesktop/NetworkManager/Devices/eth0')
+    #+END_SRC
+**** Calling methods on Proxy Objects
+     We can call methods on proxy objects in two ways - synchronous call or
+     asynchronous calls. Synchronous call block any other methods to be called
+     until the current function call ends and returns something. Asynchronous
+     method calls allow multiple calls to be in progress simultaneously and
+     allow your applications to do other work while it waits for
+     results/answers. *Asynchronous calls are invoked by setting up an event*
+     *loop like Gmainloop or gtk.main()*
+*** Proxies
+*** Notes
+    RuntimeError: To make asynchronous calls, receive signals or export objects,
+    D-Bus connections must be attached to a main loop by passing mainloop=... to
+    the constructor or calling dbus.set_default_main_loop(...) 

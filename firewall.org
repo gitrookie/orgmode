@@ -1,0 +1,41 @@
+* Firewalls
+  For List of current rules
+
+  ~sudo iptables --list~
+
+  Output will look like if the any changes are not made (e.g. in Ubuntu,
+  opensuse has different rules)
+
+  Chain INPUT (policy ACCEPT)
+  target     prot opt source               destination
+
+  Chain FORWARD (policy ACCEPT)
+  target     prot opt source               destination
+
+  Chain OUTPUT (policy ACCEPT)
+  target     prot opt source               destination
+  
+  The above output shows three default chains that will take care of three major
+  activities
+  - Incoming Traffic
+  - Outgoing Traffic
+  - Forwarded Traffic
+** Policies
+   - Accept- This is used to explicitly pass through as long as no target rule
+     applies
+   - Reject- This is used to send back an error packet in response to matched
+     packet: otherwise it is equivalent to drop so it is terminating target,
+     ending rule tarversal.
+   - Drop: This policy will halt a connection to a host without any
+     communication unless there is target rule that applies.
+
+
+
+   INPUT, FORWARD, and OUTPUT are separate. A packet will only hit one of the
+   three chains. 
+
+   If the destination is to this server, it hits the INPUT chain. If its source
+   is from this server, it hits OUTPUT. If its source and destination are both
+   other machines—it's being routed through the server—then it hits the FORWARD
+   chain. 
+

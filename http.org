@@ -1,0 +1,14 @@
+* HTTP HEADERS
+** Request Fields
+*** User-Agent
+    Your browser sends user agent to every website you connect to. User Agent is
+    a string identifying OS and browser to web server. When a browser connects to
+    website, it includes User-Agent in its HTTP header. The web server can use
+    this field to serve different web pages to different web browsers and
+    different operating systems.
+*** Connection: Keep-Alive
+*** Cache-Control: No-cache
+*** Content-Length
+*** Content-Type:
+*** Host:
+*** Authorization

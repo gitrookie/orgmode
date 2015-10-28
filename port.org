@@ -1,0 +1,88 @@
+* Ports
+It is the socket pair (the 4-tuple consisting of the client IP address, client
+port number, server IP address, and server port number) that specifies the two
+endpoints that uniquely identifies each TCP connection in an internet. (TCP-IP
+Illustrated Volume 1, W. Richard Stevens)
+
+A socket is not identified by the combination of IP address and port:
+
+TCP demultiplexes incoming segments using all four values that comprise the
+local and foreign addresses: destination IP address, destination port number,
+source IP address, and source port number. TCP cannot determine which process
+gets an incoming segment by looking at the destination port only. Also, the only
+one of the [various] endpoints at [a given port number] that will receive
+incoming connection requests is the one in the listen state. (p255, TCP-IP
+Illustrated Volume 1, W. Richard Stevens)
+
+In most C-derived languages, TCP connections are established and manipulated
+using methods on an instance of a Socket class. Although it is common to operate
+on a higher level of abstraction, typically an instance of a NetworkStream
+class, this generally exposes a reference to a socket object. To the coder this
+socket object appears to represent the connection because the connection is
+created and manipulated using methods of the socket object.
+
+The port number is used by the kernel to match an incoming packet to a certain
+process's socket descriptor.
+
+Ports were developed so that network devices and computers could accept data
+from multiple sources over the same IP address.
+
+Port exist in either allow (open) or deny (closed, blocked) mode. If your mail
+server is in state of readiness to receive SMUT traffic, we call that listening
+on port 25. That means port 25 is open. *The application in your network
+machine can open ports without waiting for your knowledge or permission.*
+
+You can have a total of 65,535 TCP Ports and another 65,535 UDP ports
+* Sockets
+  A socket is an abstraction of communication end point. Just as they would use
+  file descriptors to access files application use socket descriptor to access
+  sockets which are implemented as file descriptors in Unix system.
+
+  To create a socket:
+  #+BEGIN_SRC C
+  #include <sys/socket.h>
+
+  int socket(int domain, int type, int protocol)
+  #+END_SRC
+** Netsatat
+   netstat -l -n -A inet,inet6
+
+   tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN     
+   tcp        0      0 127.0.1.1:53            0.0.0.0:*               LISTEN     
+   tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+   tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN     
+   tcp        0      0 0.0.0.0:25              0.0.0.0:*               LISTEN     
+   tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN     
+   tcp6       0      0 :::139                  :::*                    LISTEN     
+   tcp6       0      0 :::22                   :::*                    LISTEN     
+   tcp6       0      0 ::1:631                 :::*                    LISTEN     
+   tcp6       0      0 :::25                   :::*                    LISTEN     
+   tcp6       0      0 :::445                  :::*                    LISTEN     
+   udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
+   udp        0      0 0.0.0.0:45894           0.0.0.0:*                          
+   udp        0      0 0.0.0.0:31569           0.0.0.0:*                          
+   udp        0      0 127.0.1.1:53            0.0.0.0:*                          
+   udp        0      0 0.0.0.0:68              0.0.0.0:*                          
+   udp        0      0 16.185.191.255:137      0.0.0.0:*                          
+   udp        0      0 16.185.190.82:137       0.0.0.0:*                          
+   udp        0      0 0.0.0.0:137             0.0.0.0:*                          
+   udp        0      0 16.185.191.255:138      0.0.0.0:*                          
+   udp        0      0 16.185.190.82:138       0.0.0.0:*                          
+   udp        0      0 0.0.0.0:138             0.0.0.0:*                          
+   udp        0      0 0.0.0.0:631             0.0.0.0:*                          
+   udp6       0      0 :::52449                :::*                               
+   udp6       0      0 :::5353                 :::*                               
+   udp6       0      0 :::30421                :::*                               
+   raw6       0      0 :::58                   :::*                    7          
+** UDP Packets
+   * No protocol level state
+   * Essentially a kernel/source destination filter.
+   * Some application which use UDP packets are video confrencing, video games
+     etc.. It is used because of speed, it doesn't have the overhead associated
+     with TCP.
+** Firewalls
+   Firewall works mainly on first three layers of OSI reference model, which
+   means most of work is done between network and physical layer with little bit
+   of peeking into transport layer to figure out source and destination port
+   number.
+** Basic Concepts
