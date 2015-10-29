@@ -155,6 +155,10 @@
 # Shows incoming log
    git log ..@{u}
 
+# Show various types of objects.(blob, tree, tags, commit)
+   git show --pretty="format:" --name-only -r <sha1>
+
+
 
 
 ** Internal Commands
