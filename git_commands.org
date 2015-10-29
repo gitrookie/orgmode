@@ -150,7 +150,7 @@
    git checkout --track -b refactored origin/refactored
 
 # Show various types of objects.(blob, tree, tags, commit)
-   git show --pretty="format:" --name-only <sha1>
+   git show --pretty="format:" --name-only -r <sha1>
 
 
 
