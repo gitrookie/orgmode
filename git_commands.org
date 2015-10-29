@@ -149,6 +149,12 @@
 # "origin/refactored" 
    git checkout --track -b refactored origin/refactored
 
+# Local branch "master" will be setup to track remote branch origin/master
+   git branch --set-upstream-to=origin/master master
+
+# Shows incoming log
+   git log ..@{u}
+
 
 
 ** Internal Commands
