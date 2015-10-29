@@ -17,7 +17,6 @@
    # to list contents of ~/.gitconfig, /etc/gitconfig file
    git config --list
 
-
 ** Files to version control in current folder
 
 # To start a new project to be version controlled
@@ -130,6 +129,10 @@
 # Creates a branch named <branch_name> and switches to it. 
    git checkout -b <branch_name>
 
+# Creates a tracking branch named <branch_name> using remote branch
+# origin/<branch_name>  as the starting point
+   git checkout -b <branch_name> origin/<branch_name>
+
 # Merges local branch <branch_name> with master
    git merge <branch_name>
 
@@ -141,7 +144,8 @@
 # checkouts <branch_name>
    git checkout -b <branch_name> master
 
-# To update remote-tracking branch
+# To update remote-tracking branch only. It will not update local/tracking
+# branch 
    git fetch <branch_name>
 
 # To work on remote-tracking branch. Following will create a local branch named
@@ -158,13 +162,36 @@
 # Show various types of objects.(blob, tree, tags, commit)
    git show --pretty="format:" --name-only -r <sha1>
 
+# Shows which branches are tracking what.
+   git branch -vv
 
+** Tracking Branch/Remote Tracking Branches
+   When using remote repos, we will see the terms
+   1. Tracking Branches
+   2. Remote Tracking Branches
+   Both Tracking Branches and Remote Tracking Branches are created when git
+   clone command is used.
 
+   Tracking Branches get their commits from *git clone, git pull and git merge*
+   On *git commit* in the local tracking branch, users can then use git push to
+   publish changes from their tracking branch to remote repo and remote tracking
+   branch 
+
+   Remote Tracking Branches get their contents from git clone, git pull and git
+   fetch. *git merge* updates only local tracking branch.
+   Remote tracking branch should not be modified by users.
+   Remote Tracking Branch get their contents from remote repo.
+
+*** Merges can add commit
+    If the user had made some commits to their local master branch before doing
+    the git pull or git merge, then git pull/merge would have resulted in a new
+    commit (the merge commit) being created on the users local tracking
+    branch. The user would eventually git push the new commits(both the earlier
+    commit they had done and the merge commit) to remote repo.
 
 ** Internal Commands
 
    git cat-file [-t -s -p] sha
-
 
 ** Settings for GitHub
    git remote add origin https://github.com/gitrookie/gitpoject.git
