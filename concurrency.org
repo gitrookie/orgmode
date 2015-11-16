@@ -1,5 +1,8 @@
-* Concurrency
+* Concurrency and Parallelism
   General Ideas
+  Concurrency deals with managing access to shared state from different threads.
+  Paralleism is about using multiple cores/processors to imporove the performance
+  of the system.
 ** Message Passing
    The big idea is messaging - how models communicate not how models are
    internally represented.
