@@ -1,0 +1,11 @@
+incoming = !(git fetch --quiet && git log --pretty=format:'%C(yellow)%h %C(white)- %C(red)%an %C(white)- %C(cyan)%d%Creset %s %C(white)- %ar%Creset' ..$(git rev-parse –abbrev-ref –symbolic-full-name @{u}))
+outgoing = !(git fetch --quiet && git log --pretty=format:'%C(yellow)%h
+%C(white)- %C(red)%an %C(white)- %C(cyan)%d%Creset %s %C(white)- %ar%Creset'
+$(git rev-parse –abbrev-ref –symbolic-full-name @{u})..)
+
+*Outgoing*
+git log --pretty=oneline --abbrev-commit --graph @{u}..
+git log --pretty=oneline --abbrev-commit --graph @{u}.. --stat
+
+*Incoming*
+git fetch && git log --pretty=oneline --abbrev-commit --graph ..@{u}
