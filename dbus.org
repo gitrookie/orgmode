@@ -115,4 +115,10 @@ proxy = bus.get_object('org.freedesktop.NetworkManager', '/org/freedesktop/Netwo
 *** Notes
     RuntimeError: To make asynchronous calls, receive signals or export objects,
     D-Bus connections must be attached to a main loop by passing mainloop=... to
-    the constructor or calling dbus.set_default_main_loop(...) 
+    the constructor or calling dbus.set_default_main_loop(...).
+**** Implementation Details
+     In the dbus service we have the mainloop of daemon. This code consist of
+     setting This code consist of setting *DBusGMailLoop* as default which
+     allows the script to receive DBus calls during the gtk.main loop that we
+     run at the end. After we set up the mainloop, we initialize the service and
+     jump right into our mainloop

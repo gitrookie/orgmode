@@ -6,7 +6,8 @@
 ** Event Loops
    Most Event Loops will block if there are no events ready, which means the
    operating system will not give the task any execution time until an event
-   happens 
+   happens.
 *** Event Generators
 *** Event Dispatchers
 *** Event Processors
+*** 

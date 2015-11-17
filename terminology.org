@@ -10,3 +10,20 @@
   Transfers control from an application to subsystems managed by kernel. Since
   those subsystems are shared by multiple processes one must cross boundary from
   user into kernel space in order to work with them.
+** Sleep
+   In sleep mode process is not given any CPU time.
+* Network Programing
+  Network Programming involves writing computer programs that enable processes
+  to communicate with each other across a computer network.
+** Network Protocols
+   Common network protocol are SMTP, POP3, IMAP, SSHv2 and DNS.
+* Endianess
+  Endianess refers to order of bytes, comprising a digital word, in computer
+  memory. It also describes the order of byte transmission over a digital link.
+  Words may be represented in big-endian or little endian format. With
+  big-endian most-significant byte of a word is stored at a particular memory
+  address and subsequent bytes are stored in following higher memory address,
+  the least significant byte thus stored at the highest memory address. Little
+  endian format reverses the order and stores the least significant byte at the
+  lower memory address with most significant byte being stored at the highest
+  memory address.

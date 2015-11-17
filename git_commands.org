@@ -159,6 +159,9 @@
 # Shows incoming log
    git log ..@{u}
 
+# Show Outgoing log
+   git log @{u}..
+
 # Show various types of objects.(blob, tree, tags, commit)
    git show --pretty="format:" --name-only -r <sha1>
 
@@ -181,6 +184,12 @@
    fetch. *git merge* updates only local tracking branch.
    Remote tracking branch should not be modified by users.
    Remote Tracking Branch get their contents from remote repo.
+
+   A remote tracking branch is read only to local user. When user do a *git
+   push* first the remote repository is updated. Remote Repo then updates the
+   remote tracking branch.
+
+   Therefore Remote Tracking branches gets updated only by Remote Repositories.
 
 *** Merges can add commit
     If the user had made some commits to their local master branch before doing

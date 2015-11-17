@@ -30,6 +30,62 @@
   in the program. A stack computer is programmed with a reverse Polish notation
   instruction set.
 * Global Interpreter Lock (GIL)
+  GIL is an interpreter-level lock. This lock prevents the execution of multiple
+  threads at once in Python Interpreter process.Each thread that wants to run
+  must wait for the GIL to be released by the other thread.
+  CPython uses what's called the *operating system threads* under the covers,
+  which is to say each time new request to make a thread is made, the
+  interpreter actually calls operating system libraries and kernel to generate a
+  new thread (same as Java). So in memory you have multiple threads and normally
+  operating system controls which thread is scheduled to run. On a multi
+  processor machine you could have many threads spread across multiple
+  processors.
+  However CPython does use OS threads, the interpreter also *forces GIL* to be
+  acquired by a thread before it can access the interpreter stack and can modify
+  the mutable objects.  The GIL prevents simultaneous access to Python objects
+  in interpreter stack. Even if GIL is there we still need to use some kind of
+  synchronization mechanism for our purposes.
+  The GIL also keeps garbage collection working.
+  If we have the GIL and a thread must own it to execute with in the
+  interpreter, what decides if the GIL should be released.?. The answer is byte
+  code instructions.
+  When a Python application is executed, it is compiled down to byte code, the
+  actual instructions that the interpreter used for execution of the
+  application.  A given line of a Python application might be a single byte
+  code, while others, such as import statement, may ultimately expand into many
+  byte codes.
+
+  CPython when working with pure python code will force the GIL to be released
+  every hundred byte code instructions. This means that if you have have complex
+  line of code like a complex math function that in reality act as single byte
+  code the GIL will not be released for the peroid that statement takes to run.
+  
+  There is an exception though: C modules! C extension modules can be built in
+  such a way that they release the GIL voluntarily and do their own magic.
+  Take for instance time module ("timemodule.c" in the Python source tree). The
+  sleep function looks like this
+
+  ....
+  Py_BEGIN_ALLOW_THREADS
+      sleep((int)secs);
+  Py_END_ALLOW_THREADS
+
+  In a C extension, the "Py_BEGIN_ALLOW_THREADS"  and "Py_END_ALLOW_THREADS"
+  macros signal the interpreter and basically state "hey I am entering some
+  blocking operation, here is the GIL back" and hey I am returning I need the
+  GIL. This means that anything in your application that used a blocking I/O
+  function (n/w socket manipulation or file manipulation) or a thread safe C
+  extension (most of built in ones are) can bypass the GIL.
+
+  Ways to accelerate GIL manipulation or avoid it.
+
+  -call "time.sleep()" -set"sys.checkinterval()" -run Python in optimized mode
+  -dump process intensive tasks to C extensions -use subprocess module to
+  -execute commands. 
+  
+  The GIL doesn't prevent a process from running on a different processor of a
+  machine. 
+
   The GIL is used internally to ensure that only one thread runs in the Python
   VM at a time. In general Python offers to switch among threads only between
   bytecode instructions; how frequently it switches can be set via
@@ -116,3 +172,5 @@
    allocates a separate OS thread. Two OS thread can run at the same time fully
    utilizing two CPU cores but CPython implementation doesn't allow to run two
    threads parallely.
+   As I understand it, this is due to a mutex in the join() method which has the
+   implication that you cannot interrupt it with KeyboardInterrupt 
