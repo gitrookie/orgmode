@@ -1,0 +1,69 @@
+* Introduction
+  JavaScript is built on some very good ideas and few bad ones.
+  The very good ideas include functions, loose typing, dynamic objects and an
+  expressive object literal notation.
+  Javascript functions are first class objects with mostly lexical scoping.
+  Javascript has a powerful obect literal notation. Objects can be created by
+  simply listing their components.
+  A controversial feature in javascript is *prototypal inheritance*. Javascript
+  has class free object system in which object inherit directly from other
+  objects.
+  Javascript depends upon global variables for linkage. All the top level
+  variables of all compliation units are tossed together in a common namespace
+  called the global object.
+* Grammar
+** Names
+   *Names* character followed optionally by one or more characters. Names can't
+   be *reserved words*.
+** Numbers
+   Javascript has single number type. Internally it is represented as 64 bit
+   floaitng number.
+** Strings
+   Can be wrapped into single or double quotes. All characters are 16 bit wide.
+** Statements
+   A compilation unit contains set of executable statements. In web browsers
+   each <script> tag delivers a compilation unit that is compiled and
+   immediately executed. Lacking a linker, JavaScript throws all compilation
+   unit  together in common global namespace. When used inside functions, the
+   *var* statement defines functions private variables.
+   Statements tend to be executed from top to bottom.
+
+   A block is set of statements wrapped in curly braces. Unlike many other
+   languages a block doesn't define new scope, so variables should be defined at
+   the top of fucntion not inside blocks.
+** Expressions
+** Literals
+** Functions
+* Objects
+  The simple types of JavaScript are numbers, strings, booleans, null and
+  undefined. All other values are *objects*. Numbers, strings and booleans are
+  object like in that they have methods, but they are immutable. Objects are
+  mutable keyed collections. In JavaScript arrays, functions, regular
+  expressions are objects and ofcourse objects are objects.
+
+  An *object* is a container of properties where property has a name and
+  value. A property name can be string including an empty string. A property
+  value can be any javascript value except for *undefined*.
+** Object Property
+   Object Properties are name/value pairs. A property can be enumerable,
+   writable, configurable. if a value is enumerable it will show up when
+   enumerating over an object using ~for (prop in obj)~ loop.
+** Object Literals
+   Provides convinent notation for creating new objects. An Object Literal is a
+   pair of curly braces surrounding zero or more name/value pairs. An object
+   literal can appear any where an expression can appear.
+   The *undefined* value is produced if we try to retreive non existent property
+   name. 
+** Prototype
+   Every Object is linked to a prototype object from where it can inherit
+   properties. All objects created from object literals are linked to
+   Object.prototype an object that comes with JavaScript.
+   When we make a new object we can select the object that should be its
+   prototype.
+*** Object.prototype
+    It's an object like any other object with predefined properties. We can
+    define a *new property on it*.
+** Reflection
+   It is easy to inspect an object to determine what properties it has by
+   attempting to retrieve the properties and examining the value obtained. The
+   *typeof* operator can be helpful in determining the type of property.

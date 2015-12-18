@@ -1,0 +1,93 @@
+* GUI Programming PyQt4/PyQt5
+** General Concepts
+*** TODO Object Ownership
+** QtWidgets Module
+   Any Widget can be a top-level window. But in most cases when we create a
+   top-level window we subclass ~QDialog~ or ~QMainWindow~ or occassionally
+   ~QWidget~  Both ~QDialog~ and ~QMainDialog~  and indeed all PyQt's widgets
+   are derived from ~QWidget~ which is in turn derived from ~QObject~  and all
+   are new style classes.
+   
+   Every Widget (and some other QObjects) announce state changes by emitting
+   "signals". These signals are usually ignored. However we can choose to take
+   notice of any signals we are interested in, and we do this by identifying the
+   ~QObject~ that we want to know about, the signal it emits that we are
+   intersted in and function or method we want to call when signal is emitted.
+*** ~QApplication~ Class
+    We begin by creating ~QApplication~ Object. Every PyQt GUI application must
+    have a ~QApplication~ object. This object provides access to global-like
+    information such as the applications directory, the screen size(and which
+    screen is the application is on in a multihead system), and so on. This object
+    provides the *event loop*.
+    Event Loops are used by all GUI applications. In pseudo-code, an event loop
+    looks like this:
+
+    # while True:
+       # event = getNextEvent()
+       # if event:
+            # if event == Terminate:
+                 # break
+               # processEvent(event)
+
+    When user interacts with the application, or when certain other things occur,
+    such as a timer timing out, or the application's window being uncovered(may
+    be because another application was closed) and event is generated inside PyQt
+    and added to event queue. The application event loop continuously checks to
+    see if there is an event to process and if there is it processes it (or
+    passes it to the event's associated function or method for processing)
+    Some event comes from user such as key presses or mouse clicks and some
+    from the system such as timers timing out and windows being revealed.
+
+    When we create ~QApplication~ object we pass it command line arguments;this
+    is because PyQt recognizes command line arguments of its own and removes
+    from the list of arguments given to it. Arguments such as ~-geometry~ and
+    ~-style~.
+
+    app = QApplication(sys.argv)
+    app.exec_() starts off the QApplication object's event loop.
+*** ~QLabel~ Class
+    Present in ~QtWidgets~ Module
+    ~QLablel~ can accept HTML text. Calling ~show~ method on ~QLabel~ object
+    schedules a paint event i.e. it adds a new paint event in ~QApplications~
+    object's event queue.
+*** ~QDialog~ Class
+    Inheriting ~QDialog~ we get a grey rectangle and some convenient behavior
+    and methods.
+** QtCore Module
+*** ~QTimer~ Class
+    ~QTimer.singleshot()~ takes a number of milliseconds.
+    It also takes function which it calls after number of ms elapses. The
+    function in Qt terminology is called *slot*. 
+** Signal and Slots
+   Every GUI library provides details of event that takes place such as mouse
+   clicks and key presses. For instance if we have a button with text ~click me~
+   and user clicked that button all kinds of information becomecs available. GUI
+   library can tell us the co-ordinates of mouse click relative to the button,
+   relative to button's parent widget and relative to screen, it can tell us
+   state of ~Shift~, ~Alt~, ~Ctrl~ and ~NumLock~ keys at the time of click; and
+   the precise time of click and release;and so on.
+
+   Signal and Slots are high level event handling mechanism.
+   Every ~QObject~ and therefore all its subclasses supports signal and
+   slots. In particular they are capable of announcing state changes, for
+   example when a checkbox becomes checked or unchecked. All of PyQt's widget
+   have a set of predefined signals.
+   Whenever a signal is emitted by default. PyQt throws it away. To take a
+   notice of signal we must connect it to a slot. *In PyQt slots are callables*
+** Dialogs
+*** Modality
+    When we call exec_() on a dialog it is shown modally. This means that
+    dialog's parent and sibling window get blocked until the dialog is
+    closed. Only when user closed the dialog (either by accepting it or
+    rejecting it) does the ~exec_ ()~ call return. The return value evaluates to
+    True if user accepted and False if rejected.
+**** Application Modal Dialog
+**** Window Modal Dialog
+**** Modeless Dialogs
+*** Validation
+*** Smart Dialogs
+    Initializes its widgets in accordance with data references or data structurs
+    that are passed to intializer, which is capable of updating data directly in
+    response to user interaction. Smart Dialogs can have both widget level and
+    form level validation. They are usually modeless with 'apply' and 'close'
+    buttons 
