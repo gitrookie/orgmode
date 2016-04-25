@@ -1,0 +1,45 @@
+* Document Object Model
+  It is the hirearchical representation of the html page, built by browsers
+  after reading in page.
+* jQuery Function
+  jQuery library defines a single global function named ~jQuery~. It also
+  defines a global symbol ~$~ as a shortcut for it. These are the only two
+  things library defines in global namespace.
+
+  It is heavily *overloaded* function. There are four different ways to call
+  this function.
+  1. First way is to pass a CSS selector (a string). Optionally we can pass an
+     element or jQuery Object as the second argument which is called *context*. In
+     this case if will return only matching descendants of the specified
+     elements. When we pass a CSS selector to it it returns a jQuery object
+     which represents the set of elements of DOM. By default second object is
+     the ~Document~ object.
+  2. Second way is to pass it an Element or Document or Window Object. Called
+     like this it simply wraps up the element, document or window into a jQuery
+     object which allows us to use jQuery methods rather than raw DOM methods.
+  3. Third way is to pass a string of html text. The string should contain at
+     at least one html tag with angle brackets.
+  4. Fourth way to invoke is to pass a function to it. In this case the function
+     passed will be invoked when the document has been loaded and DOM is ready
+     to be manipulated. This is jQuery verison of ~onLoad~ function. The
+     function passed will be invoked with ~document~ object as its ~this~
+     value. 
+  jQuery function returns a newly created object called jQuery Object.
+* jQuery Object
+  For looping over all the elements in a jQuery Object, you can call the each
+  the ~each()~ method instead of writing ~for~ loop. It expects a call back
+  function as sole argument which is invoked once for every element in jQuery
+  object. Within call back ~this~ object refer to the element object. ~each()~
+  also passes the index and the element as first and second argument to the call
+  back. If callback returns ~false~ for an element, iteration is terminated
+  after that element just like using ~break~ is normal ~for~ loop. ~each()~
+  returns the jQuery object on which it is called.
+* jQuery getter and setters
+  Some of simplest and most common operations on jQuery objects are those that
+  get or set the value of HTML attributes, CSS styles, element content or element
+  geometry. 
+  1. Same function is used for setting and getting the value. If you pass new
+     value to the method it sets the value, if we don't pass it gets the value.
+  2. When used as setters, these methods sets value on every elment of jQuery
+     object and then return the jQuery object to allow method chaining.
+  3. 

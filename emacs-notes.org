@@ -1,0 +1,19 @@
+* Common Lisp in Emacs
+  In gnu Emacs to use common lisp features. The following example shows common
+  lisp usage
+
+  #+BEGIN_SRC emacs-lisp
+    (require `cl)
+    (setq animal-names `(lion tiger sheep))
+    (loop for pkg in animal-names
+          do (print pkg))
+  #+END_SRC
+* Property Lists
+  A ~property list~ or ~plist~ is a list of paired elements. Each of the pair
+  associates a property name with a property name (usually a symbol) with a
+  property or value. Below is an example of property list
+  #+BEGIN_SRC emacs-lisp
+    (pine cones numbers (1 2 3) color "blue")
+  #+END_SRC
+  The property name and values can be any lisp objects but names are usually
+  symbols. 
