@@ -1,7 +1,36 @@
 * A
+* F
+** Figure of speech
+   *Meaning:*
+   A figure of speech is a phrase or saying that's not literal like saying
+   someone who died "kicked the butt".
+   When you say you are hungry enough to eat a horse; its doubtful that you mean
+   that literally; its just a figure of speech.
+   When you are saying its raining cats and dogs, pets are not falling from the
+   sky: its figure of speech.
+   *Sentence:*
+   You have people who are eating mud and I don't mean that as figure of
+   speech.
 * H
 ** Hobble
    meaning: walk in awkward way.
 * M
-** Metaphor
-   
+** Metaphor(n)
+   meaning:
+   a figure of speech in which an expression is used to refer to something that
+   it does not literally denote in order to suggest a similarity.
+* T   
+** Tenuous
+   meaning: 
+   If something is tenuous it is thin either literally or
+   metaphorically.
+   lacking substance of significance
+   Something can be physically tenuous like spider web, or ice on pond. We more
+   often use in metaphorical sense, to talk about weak ideas.
+   Sentence:
+   1. If you try to learn a complex mathematical subject you will have *tenuous*
+      grasp of it.
+   2. We will discover how to from compound data using no special data operation
+      at all only procedures. This will further blur the distinction between
+      data and procedure which was becoming *tenuous* toward the end of chapter.
+   3. *tenuous* argument won't win any debate tournaments.
