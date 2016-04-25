@@ -1,0 +1,12 @@
+* Window Object
+  ~window~ object is the host object provided by web browser and is the main
+  entry point to all client side javascript features. It represents web browser
+  window or frame and you refer to it with identifier ~window~.
+  This ~window~ object has properties like ~location~ and ~alert~ which are
+  effectively global variables and functions.
+  There are other important properties defined by ~windows~ object.
+  One of the most important properties defined by ~window~ is ~document~ object
+  which represents the content displayed in the window. The ~document~ object
+  has important methods such as ~getElementById~ which returns a single document
+  element(representing an open/close pair of HTML tags and all the content
+  between them based upon the value of its id attribute.
