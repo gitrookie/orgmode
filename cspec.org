@@ -1,0 +1,10 @@
+* Concepts
+** Indentifiers
+   An indentifier can denote an object;a function;a tag or a member of
+   structure;union or enumeration;a typedef name;a label name;a macro name; or a
+   macro parameter.
+*** Scope of identifiers
+    The identifier is visible only within a region of program text called its
+    scope. Different entities designated by same identifier either have
+    different scope or in different namespaces. There are four different kind of
+    scopes: function, file, block, /function prototype/.
