@@ -11,9 +11,30 @@
    *Sentence:*
    You have people who are eating mud and I don't mean that as figure of
    speech.
+=======
+* C
+** Crunch Time: period of time just before a project has to completed and 
+   everyone has to work hard. 
+   1. I am not getting enough sleep these days. Its crunch time at work.
+   2. 
+** Cut somebody some slack: to give somebody a break/ not to judge somebody severly.
+   1. I was extremely busy last week. Cut me some slack and I will finish the
+      report by tomorrow.
+* D
+** Dig in your heels: refuse to compromise or change your mind
+   1. My parents wanted me to give up writing, but i dug in my heels and went on
+      to become a famous writer.
+* G
+** go the extra mile: to make special effort/ try very hard to acheive goal
+   1. If you want to become proficient in English, you'll have to go the extra
+      mile and start learnign idioms.
 * H
 ** Hobble
    meaning: walk in awkward way.
+* L
+** Let your freak flag fly: to let others see your uniqueness.
+   1. My colleagues were surprised at the Christmas party-I let my freak flag
+      fly and showed them a break dance rotuine
 * M
 ** Metaphor(n)
    meaning:
@@ -34,3 +55,20 @@
       at all only procedures. This will further blur the distinction between
       data and procedure which was becoming *tenuous* toward the end of chapter.
    3. *tenuous* argument won't win any debate tournaments.
+* P
+** pull your self together: to calm down and behave normally
+   1. I understand you've had a bad day, but pull yourself together and get on
+      with your job, will you?
+* S
+** Stick to your guns: to refuse to compromise or change your mind.
+   1. My parents wanted to give up writing, but I stuck to my guns and went on
+      to become famous writer.
+   2. 
+** step up your game: to start performing better
+   1. if you want to win competetion, you will have to step up your game.
+
+** shape up or ship out: either start performing better or leave.
+   This is the last time I am telling you to arrive on time. Shape up or ship out.
+** shoot from the hip: to speak directly
+   1. If you want to get on well with your boss try not to shoot from the hip
+      next time. You don't want to offend him, do you?
