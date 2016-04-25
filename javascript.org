@@ -2,19 +2,35 @@
   JavaScript is built on some very good ideas and few bad ones.
   The very good ideas include functions, loose typing, dynamic objects and an
   expressive object literal notation.
-  Javascript functions are first class objects with mostly lexical scoping.
-  Javascript has a powerful obect literal notation. Objects can be created by
+  JavaScript functions are *first class objects* with mostly *lexical scoping*.
+  JavaScript has a powerful object literal notation. Objects can be created by
   simply listing their components.
   A controversial feature in javascript is *prototypal inheritance*. Javascript
   has class free object system in which object inherit directly from other
   objects.
   Javascript depends upon global variables for linkage. All the top level
-  variables of all compliation units are tossed together in a common namespace
+  variables of all compilation units are tossed together in a common namespace
   called the global object.
+* Concepts
+** Duck Typing
+   In JavaScript duck typing means "if an object can walk and swim like duck a
+   duck then we treat it as duck even if doesn't inherit from the prototype
+   object of the Duck class"
 * Grammar
+** Type
+   A type in javascript is number, string, boolean, undefined, object, function,
+   null.
+*** ~null~ 
+    ~null~ is literal in javascript representing null or an "empty" 
+
+    | typeof null        | object    |
+    | typeof undefined   | undefined |
+    | null === undefined | false     |
+    | null == undefined  | true      |
+
 ** Names
    *Names* character followed optionally by one or more characters. Names can't
-   be *reserved words*.
+   be *reserved words*. /identifiers in other languages/.
 ** Numbers
    Javascript has single number type. Internally it is represented as 64 bit
    floaitng number.
@@ -22,10 +38,35 @@
    Can be wrapped into single or double quotes. All characters are 16 bit wide.
 ** Statements
    A compilation unit contains set of executable statements. In web browsers
-   each <script> tag delivers a compilation unit that is compiled and
-   immediately executed. Lacking a linker, JavaScript throws all compilation
+   *each <script> tag delivers a compilation unit* that is compiled and
+   immediately executed. *Lacking a linker*, JavaScript throws all compilation
    unit  together in common global namespace. When used inside functions, the
    *var* statement defines functions private variables.
+
+   #+BEGIN_SRC js
+     var x = "Hello World";
+
+     function foo () {
+         var x = "Gaurav Sood";
+     }
+
+     foo();
+   #+END_SRC
+   
+   Above code will not change the value of variable x globally whereas below
+   code will effect the global value.
+
+   #+BEGIN_SRC js
+     var x = "Hello World";
+
+     function foo () {
+         x = "Gaurav Sood";
+     }
+
+     foo();
+
+
+   #+END_SRC
    Statements tend to be executed from top to bottom.
 
    A block is set of statements wrapped in curly braces. Unlike many other
@@ -33,21 +74,39 @@
    the top of fucntion not inside blocks.
 ** Expressions
 ** Literals
-** Functions
+** Flow Control
+*** ~switch~
+
+    #+BEGIN_SRC js
+      switch (expr) {
+      case "Oranges":
+              /Statements/
+              [break;]
+      case "Apples":
+              /statements/
+              [break;]
+      default:
+          /statements/
+      }
+    #+END_SRC
+    expr is evaluated and matched against value in each case statement using
+    strict equality.
 * Objects
   The simple types of JavaScript are numbers, strings, booleans, null and
-  undefined. All other values are *objects*. Numbers, strings and booleans are
-  object like in that they have methods, but they are immutable. Objects are
-  mutable keyed collections. In JavaScript arrays, functions, regular
-  expressions are objects and ofcourse objects are objects.
+  undefined. All other values including functions are *objects*. Numbers,
+  strings and booleans are object like in that they have methods, but they are
+  immutable. Objects are mutable keyed collections. In JavaScript arrays,
+  functions, regular expressions are objects and ofcourse objects are objects.
 
-  An *object* is a container of properties where property has a name and
-  value. A property name can be string including an empty string. A property
-  value can be any javascript value except for *undefined*.
+  An *object* is a container of properties(unordered collection) where property
+  has a name and value. A property name can be string including an empty
+  string. A property value can be any javascript value except for *undefined*.
 ** Object Property
-   Object Properties are name/value pairs. A property can be enumerable,
-   writable, configurable. if a value is enumerable it will show up when
-   enumerating over an object using ~for (prop in obj)~ loop.
+   Object Properties are name/value pairs. A property has three *attributes* can
+   be enumerable, writable, configurable. if a value is enumerable it will show
+   up when enumerating over an object using ~for (prop in obj)~ loop. A
+   configurable property tells us wether we can delete a particular attribute or
+   change the property attribute.
 ** Object Literals
    Provides convinent notation for creating new objects. An Object Literal is a
    pair of curly braces surrounding zero or more name/value pairs. An object
@@ -60,10 +119,182 @@
    Object.prototype an object that comes with JavaScript.
    When we make a new object we can select the object that should be its
    prototype.
+** Object Attributes
+   Every object has three attributes in addition to properties
 *** Object.prototype
     It's an object like any other object with predefined properties. We can
-    define a *new property on it*.
+    define a *new property on it*
+*** .Object Class
+    A string that categorizes the type of an object. The ~toString~ method
+    inherited from ~Object.prototype~ returns a string "[object class]"
+*** Extensible Flag
+** Object Type
+   Native Objects: Provided by ECMAScript Specification
+   Host Object: Provided by environment e.g. webbrowsers. The HTMLElements
+   objects that represent the sturcture of webpage in client side javascript are
+   host objects.
+   User Defined Object: Object created by execution of javascript code.
+   Own Property defined directly on an object
+   inhereted is defined by object's prototype object
 ** Reflection
    It is easy to inspect an object to determine what properties it has by
    attempting to retrieve the properties and examining the value obtained. The
    *typeof* operator can be helpful in determining the type of property.
+** Object Creation
+   1. Object Literal is an expression that creates and intializes a new object
+      each time it is evaluated. The value of each property is evaluated each
+      time literal is evaluated.
+   2. new keyword is always followed by function invocation called a
+      constructor. JavaScript provides builtin constructors
+      Object, Array, Date, RegExp.
+   3. Object.create method
+* Prototype
+  *Every Javascript Object is linked to second javascript object* or null (in
+  rare cases). This second object is called prototype. Object.prototype is not
+  linked to any other object.
+* Functions
+  Functions in JavaScript are objects. Objects are collection of name/value
+  pairs with hidden link to prototype object. Objects produced from the object
+  literals are linked to Object.prototype. Functions objects are linked to
+  Function.prototype(which itself is linked to Object.Prototype).
+
+  Every function is created with two additional properties
+  1. function's context
+  2. code that implements functions behavior
+  
+  Since functions are objects function can have methods. Functions are basic
+  modular unit in JavaScript.
+  Function.prototype overrides the ~toString~ method which returns the source
+  code of the function.
+** Function Literals
+   Functions objects created from function literal are linked to
+   Function.prototype. 
+   Function object can be created with function literals.
+
+   #+BEGIN_SRC js
+     var add = function (a, b) {
+         return a + b;
+     };
+   #+END_SRC
+
+   A function literal has four parts.
+   1. first part is reserved word function. if a function is not given name it
+      is said to be anonymous.
+   2. second part is function name.
+   3. third part is set of parameters
+   4. fourth part is function body in curly braces.
+
+   A function literal can appear anywhere an expression can appear. A function
+   nested inside a function enjoys access to parameters and variables of the
+   function it is nested in. This is called closure.
+** Function Invocation
+   In addition to declared parameters every function receives two additonal
+   parameters i.e. ~this~ and ~arguments~.
+   ~this~ parameter is very important in object oriented programming and its
+   value is determined by the *invocation pattern*
+   There are four pattern of invocation in javascript.
+   1. *Method Invocation Pattern:*
+      When a function is stored as property of object we call it a method. When
+      a method is invoked this is bound to that object. The binding of ~this~
+      happens at invocation time. This very late binding makes function that
+      use this highly reusable. Method that get their object context from this
+      are called public methods.
+   2. *Function Invocation Pattern:*
+      When a function is not the property of object it is invoked as
+      function. When a function is invoked like this it ~this~ is bound to
+      global object.
+   3. *Constructor Invocation Pattern:*
+      Functions that are intended to be used with ~new~ are called
+      constructors. By convention constructors are kept in a variable names
+      starting with capital letters. Constructors should not be called without new.
+   4. *Apply Invocation Pattern:*
+      The ~apply~ method lets us construct an array of arguments to use to
+      invoke a function. It also lets us choose value of ~this~. The ~apply~
+      method takes two parameters
+      - first is value that should be bound to ~this~
+      - second is array of parameters
+
+   There is no type checking on the arguments value. any value can be passed to
+   any parameter.
+*** ~Arguments~ Parameters
+    ~arguments~ contain all the arguments passed to function.
+    ~arguments~ is not really an array. It is an array like object. arguments
+    has length property but it lacks all the array methods.
+*** Return
+    A function always return the value if it is not specified it returns
+    ~undefined~.
+    If function is invoked with ~new~ prefix and return value is not an object,
+    then ~this~ is returned instead.
+** Exceptions
+   JavaScript provides an exception handling mechanism.
+** Augmenting Types
+* Operators
+** Equality Comparison and Sameness
+   JavaScript provides three different value comparison operations.
+   - strict equality (or triple equals or identity) using ===
+     No type conversion.
+   - loose equality ==  
+     Attempts type conversion.
+   - and Object.is (new in ECMAScript.
+** ~new~ operator
+   The ~new~ operator creates an instance of user defined object type or one of
+   the built in object types that has constructor function. The following
+   expression shows ~new~ usage.
+
+                        ~new /constructor/[([arguments])]~
+
+   Parameters
+   ~constructor~ A function that specifies the type of object instance.
+   ~arguments~ A list of values that the constructor will be called with.
+
+   When the code ~new Foo(...)~ is executed following things happens.
+   1. A new object is created, inheriting from ~Foo.prototype~. 
+   2. The constructor function ~Foo~ is executed with specified arguments and
+      this is bound to newly created object. Constructor is invoked as a method
+      of newly created object. Therefor ~this~ refers to newly created object.
+   3. The object returned by constructor function becomes the result of whole
+      new expression. If the constructor function doesn't explicitly return an
+      object, the object created in step 1 is used.
+* Inheritance
+  If two objects inherit properties from the same prototype object, then we say
+  that they are instances of same class. 
+  If two objects inherit from same prototype it essentially means they were
+  created and initialized by the same constructor function.
+** Class
+   A Class in Javascript is set of objects that inherit from same prototype
+   object. Classes are based upon the JavaScript's prototype based inheritance
+   mechanism. if two objects inherit properties from the same prototype object,
+   then we say they are instances of the same class.
+   Prototype object is fundamental to the identity of a class: two objects are
+   instances of the same class iff they inherit from same prototype object. The
+   constructor function that intializes the state of new object is not
+   fundamental: two constructor function may have ~prototype~ properties that
+   point to same prototype object. Then both constructors can be used to create
+   instances of same class.
+   Even though constructors are not fundamental as prototypes, the constructor
+   serves as public face of the class. Most obviously, the name of the
+   constructor function is usually adopted as the name of class. We say, for
+   example, the Range() constructor creates Range objects. More fundamentally
+   constructors are used with ~instanceOf~ operator when testing objects for
+   membership in a class. The ~instanceOf~ operator doesn't actually check
+   whether r was initalized by the ~Range~ constructor. It checks whether it
+   inherits from ~Range.prototype~.
+*** Simulating classical classes from other class based language in JavaScript
+    In JavaScript there are three different objects involved in defining
+    classes.
+    1. Constructor Object: Constructor function define a name for JavaScript
+       class. Properties you add to this constructor object serve as class
+       fields and class methods.
+    2. Prototype Object
+       The properties of this object are inherited by all instances of class.
+    3. Instance Object
+       
+** Constructor
+   Any JavaScript function can be used as a ~constructor~ therefore every
+   function automatically has a ~prototype~ property. The value of this property
+   is an object that has a single nonenumerable ~constructor~ property. The
+   value of constructor property is function object. ~null~ and ~undefined~
+   don't have constructors.
+*** TypeError
+    The ~TypeError~ object represents an error when a value is not of the
+    expected type.
