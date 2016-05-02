@@ -11,7 +11,6 @@
    *Sentence:*
    You have people who are eating mud and I don't mean that as figure of
    speech.
-=======
 * C
 ** Crunch Time: period of time just before a project has to completed and 
    everyone has to work hard. 
@@ -20,6 +19,17 @@
 ** Cut somebody some slack: to give somebody a break/ not to judge somebody severly.
    1. I was extremely busy last week. Cut me some slack and I will finish the
       report by tomorrow.
+** Condescending
+   *Meaning*
+   If you are being consdescending, you are looking down on
+   someone. Condescending behavior is, not surprisingly, itself looked down
+   upon. It is usullay intended to make people feel bad about not knowing or
+   having something, and it very often works.
+   *Sentence*
+   Its a little condescending. 
+** Conjure
+   *Meaning*
+   bring into existence often magically
 * D
 ** Dig in your heels: refuse to compromise or change your mind
    1. My parents wanted me to give up writing, but i dug in my heels and went on
