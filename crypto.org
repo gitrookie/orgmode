@@ -1,0 +1,5 @@
+* Introduction
+  A cryptographic algorithm or cipher is a mathematical function used in 
+  encryption and decryption process.
+  A cryptographic algorithm plus all possible keys and all the protocols that
+  make it work comprise cryptosystem. *PGP* is a cryptosystem.
