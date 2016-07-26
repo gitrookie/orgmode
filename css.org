@@ -1,0 +1,46 @@
+* CSS Box Model
+  Every element in an html tree is defined by rectangular box.
+  content-padding-border-margin
+* Background
+  Background doesn't extend to margin.
+* Position
+  An element is positioned if its position property is anything but static.
+  Four kinds of positioning
+  1. Static: default, any element that has static positioning applied is in
+     normal document flow. A statically positioned element will ignore any
+     values for the properties top, right, bottom, left as well as any z-index
+     declarations. In order to use any of these properties your element must
+     have absolute, relative, of fixed positioning applied.
+  2. Relative: Elements are positioned according to top, right, bottom,
+     left. The elements around relative positioned element act as though that
+     shift didn't exist. The relatively positioned element is taken out of the
+     normal document flow, but still affects elements around it. Those elements
+     just acts as though the positioned element is still in the normal document flow.
+  3. Absolute: Completely removed from the normal document flow. An absolutely
+     positioned element is positioned relative to the first parent that has
+     positioning other than static applied to it. if no such parent element is
+     found the element is positioned relative to document window.
+  4. Fixed: Always positioned relative to browser window. Elements are fixed,
+     they don't move when the page is scrolled.
+  5. Inherit
+  
+  Floated and Positioned elements are removed from the *Normal Document Flow*.
+* Normal Document Flow
+  Normal Flow includes block formatting of block boxes, inline formatting of
+  inline boxes, relative positioning of block or inline boxes, and positioning
+  of run-in boxes.
+
+  Floats are laid out according to normal flow, then taken out of the flow and
+  shifted to left of right as far as possible. Content may flow along the side
+  of float.
+
+  In absolute positioning model a box is removed from the normal flow entirely
+  and assigned a position with respect to containing block.
+
+  Relative Positioning Model a box is shifted relative to its position in the
+  normal document flow. Other elements are not affected by and lay where they
+  would had no positioning been applied.
+* Properties
+** Margin
+   ~margin: 0 auto~ 0 specifies top and bottom margins should be 0. ~auto~
+   specifies to center the element relative to its parent.

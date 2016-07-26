@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * Introduction
   JavaScript is built on some very good ideas and few bad ones.
   The very good ideas include functions, loose typing, dynamic objects and an
@@ -142,3 +143,73 @@
    The JavaScript Event Loop model never blocks. Handling I/O is typically
    performed via events and callbacks, so when the application is waiting for an
    indexed DB query, it can still process other things like user input.
+=======
+* Functions
+  Functions in JavaScript are objects. Objects are collection of name/value
+  pairs with hidden link to prototype object. Objects produced from the object
+  literals are linked to Object.prototype. Functions objects are linked to
+  Function.prototype(which itself is linked to Object.Prototype).
+
+  Every function is created with two additional properties
+  1. function's context
+  2. code that implements functions behavior
+  
+  Since functions are objects function can have methods.
+** Function Literals
+   Function object can be created with function literals.
+   var add = function (a, b) {
+       return a + b;
+   };
+   A function literal has four parts.
+   1. first part is reserved word function. if a function is not given name it
+      is said to be anonymous.
+   2. second part is function name.
+   3. third part is set of parameters
+   4. fourth part is function body in curly braces.
+
+   A function literal can appear anywhere an expression can appear. A function
+   nested inside a function enjoys access to parameters and variables of the
+   function it is nested in. This is called closure.
+** Function Invocation
+   In addition to declared parameters every function receives two additonal
+   parameters i.e. ~this~ and ~arguments~.
+   ~this~ parameter is very important in object orieneted programming and its
+   value is determined by the *invocation pattern*
+   There are four pattern of invocation in javascript.
+   1. *Method Invocation Pattern:*
+      When a function is stored as property of object we call it a method. When
+      a method is invoked this is bound to that object. The binding of ~this~
+      happens at invocation time. This is very late binding makes function that
+      use this highly reusable. Method that get their object context from this
+      are called public methods.
+   2. *Function Invocation Pattern:*
+      When a function is not the property of object it is invoked as
+      function. When a function is invoked like this it ~this~ is bound to
+      global object.
+   3. *Constructor Invocation Pattern:*
+      Functions that are intended to be used with ~new~ are called
+      constructors. By convention constructors are kept in a variable names
+      starting with capital letters. Constructors should not be called without new.
+   4. *Apply Invocation Pattern:*
+      The ~apply~ method lets us construct an array of arguments to use to
+      invoke a function. It also lets us choose value of ~this~. The ~apply~
+      method takes two parameters
+      - first is value that should be bound to ~this~
+      - second is array of parameters
+
+   There is no type checking on the arguments value. any value can be passed to
+   any parameter.
+*** ~Arguments~ Parameters
+    ~arguments~ contain all the arguments passed to function.
+    ~arguments~ is not really an array. It is an array like object. arguments
+    has length property but it lacks all the array methods.
+*** Return
+    A function always return the value if it is not specified it returns
+    ~undefined~.
+    If function is invoked with ~new~ prefix and return value is not an object,
+    then ~this~ is returned instead.
+** Exceptions
+   JavaScript provides an exception handling mechanism.
+** Augmenting Types
+   
+>>>>>>> a2fabc485cb05fa2257252b317b0474cc03da9de

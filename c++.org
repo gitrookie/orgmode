@@ -1,2 +1,36 @@
 * Opaque Data Type
+* General Concepts
+* C++ Memory Model
+  The Fundamental storage of unit in the C++ memory model is /byte/ composed of
+  contiguous sequence of bits, the number of which is implementation defined.
+  Wiki: Various implementation of C/C++ reserve 8, 9, 16, 32 or 36 bits for
+  storage of byte. The actual number of bits in a paritcular implementation is
+  documented as CHAR_BIT as implemented in file ~limits.h~. Every byte has
+  unique address.
+
+  A /memory location/ is either an object of scalar type or maximal sequence of
+  adjacent bit-fields all having non zero width.
+* Bit-Fields
+* C++ Object Model
+  An /object/ is region of storage.
+  Note: A function is not an object wether or not it occupies storage in the way
+  that objects do. 
+  An object is created by /definition/ or by a /new-expression/ or by the
+  implementation when needed. An object has /name/, /storage duration/ which
+  influences /lifetime/, object has /type/. Some objects are polymorphic;the
+  implementation gernerates information associated with each such object that
+  makes it possible to determine object's type during program execution.
+
+  Objects can contain other objects called /subobjects/. A subobject can be a
+  /member subobject/ a /base class subobject/ or an array element. An  object
+  that is not a subobject of any other object is /complete object/.
+
+  For every object x, there is some object called the complete object of x,
+  determined as follows
+  1. if x is a complete object, then x is complete object x.
+  2. otherwise, the complete object of x is the complete object of the (unique)
+     object that contains x.
+* Chapter 2: Lexical Conventions
+  The text of programs is kept in units called /source files/. 
+
   

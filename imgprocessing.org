@@ -1,0 +1,4 @@
+* Resolution
+  Spatial Resolution is the smallest discernible(observable/noticeable) detail
+  in an image.
+  Intensity Resolution

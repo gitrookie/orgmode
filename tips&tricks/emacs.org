@@ -43,7 +43,7 @@
    This can be useful if you want to visit some particular files regularly.
 ** Saving text in registers
    ~C-x r s A~ saves text in register A.
-   ~C-c r i A~ inserts text from register A.
+   ~C-x r i A~ inserts text from register A.
 ** Saving window configuration in registers.
    ~C-x r w r~
 * Interactive Highlight Font Lock

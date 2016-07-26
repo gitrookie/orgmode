@@ -1,0 +1,50 @@
+* Chap1
+  Object oriented design follow patterns like "represent states with object" and
+  decorate objects so that we can easily add/remove features.
+  Design Patterns make it easier to reuse successful design and architectures.
+
+  *What is design pattern*
+  Design pattern describes a problem which occurs over and over again in our
+  environment, and then describe the core of the solution to that problem, in
+  such a way that you can use solution million of times withoug overdoing it the
+  same way twice.
+
+  Design Patterns in this book are descriptions of communicating objects and
+  classes that are customized to solve a general design problem in particular
+  context. The design pattern identifies the participating classes and
+  instances, their roles and collabrations, and the distribution of
+  responsibilities.
+** MVC Architecture
+   MVC divides the given software application into three interconnected parts so
+   as to separate internal representations of information from the ways that
+   information is presented to or accepted from the user.
+   MVC decouples *views* and *models* using *subscrible/notify(publish)*
+   mechanism. Taken at face value this example reflects a design that decouples
+   views from model. But design is applicable to more general design problem:
+   decoupling object so that changes to one can affect any number of others
+   without the changed object knowing details of the others. This more gerneral
+   design is described by *Observer* design pattern.
+   *Composite Pattern* used in views to create nested views which allow us to
+   treat some classes as primitive objects and other classes define composite
+   objects that assemble primitives into more complex ones.
+   The view-controller relationship is an example of *Strategy* pattern.
+   MVC uses other design pattern, such as Factory Method to specify the default
+   controller class for a view and decorator to add scrolling to view. But the
+   main relationships are given by /Observer/, /Composite/ and /Strategy/ design
+   pattern. 
+
+   1. Creational: Concerns the process of object creation
+   2. Structural: deals with composition of classes or objects.
+   3. Behavioral: characterize ways in which classes or objects interact and
+      distribute responsibilities.
+
+   Objects in design pattern doesn't always corresponds to real world objects.
+
+   The *Facade* pattern describes how to represent complete subsystem as object.
+** Object Interface
+   The set of all signatures defined by an object's operation is called
+   interface to object.
+
+   A *type* is used to denote a particular *interface*. We speak of an object
+   having type window if it accepts all request for the operation defined in the
+   interface named "Window".
