@@ -1,5 +1,4 @@
 * Dbus
-
   DBus is an IPC and RPC mechanism that allows communication between multiple
   programs. i.e. processes running concurrently on same machine.
   *Dbus is a specification* and it also provides a *reference implemenation* in
@@ -21,8 +20,8 @@
   distinct daemon for each user login session (for general IPC between processed
   started by user in that particular session). Application communicate with
   daemon over *Unix Domain sockets*. The message bus is built on top of general
-  one to  one message passing framework which two applications can also use to
-  communicate directly and without going through the message bus daemon.
+  one to one message passing framework which two applications can also use to
+  communicate directly and *without going through the message bus daemon*.
 
   DBus uses logical Bus over which connected applications may communicate. For
   ease of use the communication takes place via a simple object model that
@@ -30,7 +29,7 @@
   bus may query for the avaliability of objects call remote methods on them and
   request notifications of the signals they emit.
 ** Applications
-   Firefox automatically turned to offline mode when your internet  connection
+   Firefox automatically turned to offline mode when your internet connection
    is down. Ever wondered how this happens. This is because the NetworkManager
    app talks to firefox using a back end utility called D-Bus to update it on
    the status of the internet connection.
@@ -38,16 +37,17 @@
    The daemon that is attached to each user session is called *SessionBus*.
 ** DBus Service
    Every application that intends to share its objects and methods are started
-   as DBus services. A DBus enabled application exports its object with their
+   as DBus services. A DBus enabled application *exports* its object with their
    functionalities as methods that other application can use.
 
 * Key Components
 ** Object Paths
    DBus objects are identified within in an application via their object
    paths. The object path serves as an unique identifier for an object. The
-   hirearchy implied the path structure in purely conventional. Applications
+   hierarchy implied in the path structure is purely conventional. Applications
    with naturally hirearchical structure will likely take the advantage of this
    feature while others may choose to ignore it completely.
+
 ** Interfaces
    It is named group of methods and signals.
    DBus interface defines the method and signal supported by DBus objects. In
@@ -69,16 +69,19 @@
 ** Connecting to DBus
    Application that use DBus connect to bus daemon, which forward message
    between application.To use dbus you need to create a Bus object representing
-   the connection to bus daemon. To connect to Session Bus create a session bus
-   object.
+   the *connection to bus daemon*. To connect to Session Bus create a session
+   bus object.
+
    #+BEGIN_SRC python
-import dbus
-session_bus = dbus.SessionBus()
+     import dbus
+     session_bus = dbus.SessionBus()
    #+END_SRC
 
    Similarly we can connect to SystemBus by creating a SystemBus object. We can
    connect to both the buses in same application.
 ** Making Method Calls
+   DBus application export objects for other application's use. To start working
+   with an object in another application you need to know
    1. Bus Name identifies the application you want to communicate with.
    2. Object Path identifies the object we can interact with. Applications can
       export many objects. For example word processor can export an object
@@ -99,10 +102,12 @@ session_bus = dbus.SessionBus()
     proxy of object representing eth0 like this.
 
     #+BEGIN_SRC python
-import dbus
-bus = dbus.SystemBus()
-proxy = bus.get_object('org.freedesktop.NetworkManager', '/org/freedesktop/NetworkManager/Devices/eth0')
+      import dbus
+      bus = dbus.SystemBus()
+      proxy = bus.get_object('org.freedesktop.NetworkManager',
+                             '/org/freedesktop/NetworkManager/Devices/eth0')
     #+END_SRC
+
 **** Calling methods on Proxy Objects
      We can call methods on proxy objects in two ways - synchronous call or
      asynchronous calls. Synchronous call block any other methods to be called
@@ -118,7 +123,67 @@ proxy = bus.get_object('org.freedesktop.NetworkManager', '/org/freedesktop/Netwo
     the constructor or calling dbus.set_default_main_loop(...).
 **** Implementation Details
      In the dbus service we have the mainloop of daemon. This code consist of
-     setting This code consist of setting *DBusGMailLoop* as default which
-     allows the script to receive DBus calls during the gtk.main loop that we
-     run at the end. After we set up the mainloop, we initialize the service and
-     jump right into our mainloop
+     setting *DBusGMainLoop* as default which allows the script to receive DBus
+     calls during the gtk.main loop that we run at the end. After we set up the
+     mainloop, we initialize the service and jump right into our mainloop
+
+     The following piece of code does the following
+
+     ~DBusGMainLoop(set_as_default=True)~
+
+     sets up dbus-python's mainloop integration to integrate with the global
+     default main-context in GLib (it currently uses dbus-glib to do that)
+     What this means is that whenever a DBus connection started by dbus-python
+     wants to listen for events on a socket,or wait for timeout, it will ask
+     GLib to add those to global default main context as event sources.
+     the ~set_as_default~ argument is necessary otherwise dbus-python has no way
+     to know that your application is going to iterate the GLib main loop as
+     opposed to Qt, Tk etc.
+
+     ~Gtk.main()~
+
+     We can add event sources using ~gobject.timeout_add()~,
+     ~gobject.idle_add()~, and ~gobject.io_add-watch()~ all add event sources to
+     default main context.
+
+     ~DBusGMainLoop()~ tells dbus-python that whenever it wants to add an event
+     source to the ~Gtk.main()~ it should use equivalent C functions in GLib to
+     do so.
+
+     Note: In principle, DBusGMainLoop ought to take a ~GObject.MainContext~ as
+     an optional argument but that's never been implemented, and it currently
+     always uses the default main context, which is the same one Gtk uses, and
+     which should only be iterated from the main thread.
+
+     ~gobject.mainloop~ is namespace for set of global functions, not an
+     object. if one want to use multiple threads (not recommended) please see
+     the GLib C API documentation for details how main loops and main contexts
+     relate, then PyGTk to see how that translates to python.
+***** Relation between DBusGMainLoop and Gtk.main()
+      ~DBusGMainLoop()~ instantiates a new ~DBusGMainLoop()~ and set it as
+      dbus-python's global default mainloop integration object. (With hindsight,
+      DBusGMainLoop was poor choice of name - it should have been
+      DBusMainIntegration or something. The result is that whenever a new
+      ~dbus.Connection.connection~ is instantiated, it will call methods on that
+      ~DBusGMainLoop~  to connect its event sources up to the default GLib main
+      context, which is same one used by Gtk.
+
+      ~dbus.bus.BusConnection~, ~dbus.Bus~, ~dbus.SessionBus~ etc are
+      ~dbus.Connection.connection~ subclasses so anything said for latter
+      applies to all other subclasses.
+*** Starting DBus Service
+    A DBus generally is started by using ~BusName~ class  We pass well-known
+    busname as a string as first argument which DBus will attempt to
+    claim. Second argument is bus on which this service will be advertised
+    i.e. System or Session Bus.
+
+    ~conn = BusName(well_known-bus-name-our-choice, bus)~
+
+**** ~dbus.service.Object~
+     A base class for exporting our own services across the bus.
+
+     ~Object(conn, object_path)~
+
+**** ~get_object~
+     In the client process we call ~get_object~ on session bus which returns a
+     local proxy or remote object.

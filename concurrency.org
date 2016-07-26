@@ -3,14 +3,68 @@
   Concurrency deals with managing access to shared state from different threads.
   Paralleism is about using multiple cores/processors to imporove the performance
   of the system.
-** Message Passing
+* Message Passing
    The big idea is messaging - how models communicate not how models are
    internally represented.
-** Event Loops
+* Event Loops
+   The Event loop or message dispatcher or message pump or run loop or message
+   loop is a programming construct that waits for and *dispatches events* or
+   messages in a program. It works by making request to some internal or
+   external event provider (which generally blocks the request until and event
+   has arrived), then it *calls the relevant event handler (dispatches the
+   event)*. The event loop can be used in conjunction with a reactor(a design
+   pattern), if the event provider follows the *file interface*, which can be
+   /selected/ or /polled/. The event loop almost always operate asynchronously
+   with the message originator.
+
+   When the event loop is central flow construct of a program it may be termed
+   as main loop or main event loop.
+
+   Message pumps are said to pump messages from the program's message queue
+   (assigned and usually owned by underlying operating system) into the program
+   for processing. In the strictest sense event loop is one of the methods for
+   implementing inter-process communication. The event loop is special
+   implementation technique of systems that use *message passing*.
+
    Most Event Loops will block if there are no events ready, which means the
    operating system will not give the task any execution time until an event
    happens.
-*** Event Generators
-*** Event Dispatchers
-*** Event Processors
-*** 
+** Event Generators
+** Event Dispatchers
+** Event Processors
+* Message Passing
+* Signals
+  Signals are limited form of inter-process communication used in Unix like
+  operating systems. A signal is an asynchronous notification sent to process or
+  to thread within same process in order to notify an event has occured.
+
+  When a signal is sent, operating system interrupts normal flow of execution to
+  deliver the signal. Execution can be interrupted during any *non atmoic
+  instruction*. If the process has previously registered a signal handler, that
+  routine is executed. Otherwise the default signal handler is
+  executed. Computational and memory footprint of signals is small. Signal
+  handlers can be installed with ~singnal()~ system call.
+* ~select()~ system call
+  If a signal is received and handled while task is blocking is ~select()~ then
+  select will return early with ~EINTR~; if a signal is received while the taks
+  is CPU bound then the task will be suspended between instructions until the
+  signal handler returns.
+* Window System
+  is a type of GUI that implements WIMP paradigm for user interface. The main
+  component of windowing system is *display server*;any application which that
+  displays its GUI in a window, is a client of display server. The display
+  server and its client communicates with each other over a communication
+  protocol which is usually called the display server protocol, the display
+  server being mediator between clients and the user. It receives all input from
+  the kernel, that the kernel receives from all attached devices keyboard,
+  pointing devices or touch screen and transmits it to correct client. The
+  display server is also responsible for the output of the clients to the
+  computer monitor. A windowing system enables the computer to work with several
+  programs at the same time. Each program presents its GUI(for example using
+  widget toolkits like Qt, GTK) in its own window which is generally a
+  rectangular area of the screen. 
+
+  From a programmer point of view window system implements graphical
+  primitives. ie. rendering fonts or drawing line on screen. It provides an
+  abstraction of graphics hardware for use by higher level elements of the
+  graphical interface such as window manager.

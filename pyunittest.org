@@ -1,0 +1,72 @@
+* ~UnitTest~ Framework
+  ~Unittest~ framework supports
+  - test automation
+  - sharing of setup and teardown code for tests
+  - aggregation of test into collection
+  - independence of tests from reporting framework
+
+  To achieve above ~unittest~ supports some important concepts in an object
+  oriented way
+  1. *Test Fixture* represents the prepration needed to perform one or more
+     tests and any associate clean up actions. This may involve creating
+     temporary or proxy databases, directories and starting a server process
+     etc. 
+  2. *Test Case* is individual unit of testing. It checks for specific response
+     to particular set of inputs. ~unittest~ provides a base class, ~TestCase~
+     which is used to create new test cases. A TestCase holds individual test
+     methods and provides hooks for preparing for each method and cleaning up
+     after that.
+  3. *Test Suite* is collection of test cases or test suites or both. It is used
+     to aggregate tests that should be executed together.
+  4. *Test Runner* A test runner is component which orchestrates the execution
+     of tests and provides outcome to user. The runner may use graphical
+     interface, textual interface or special value to indicate the results of
+     executing the tests
+* Test Discovery
+  Unittest supports test discovery. In order to be compatible with test
+  discovery, all of test files must be modules or packages (including name
+  space packages) importable from top level directory of the project.
+* Organizing Test Code
+  Basic building block of unittests are /test cases/--single scenarios that must
+  be setup and checked for correctness. In unittest, test cases are represented
+  as instances of ~unittest.TestCase~. The testing code of a TestCase should be
+  entirely self contained, such that it can run either in isolation or in
+  arbitrary combination with any number of test cases.
+
+  Important part is that code is isolated from other code that we are not
+  testing (which itself could have errors and confuse test results.)
+
+  Good Testing requires modular, decoupled code, which is hallmark of good
+  system design.
+
+  The simplest TestCase subclass will simply implement a test method(a method
+  whose name starts with test) in order to perform specific testing code.
+
+  In order to test something, we use one of the ~assert*()~ methods of the
+  ~TestCase~ base class. If test case fails, an exception will be raised, and
+  unittest will identify the test case as *failure*. Any other exception will be
+  treated as *errors*.
+
+  Assertion Failure
+
+  Tests can be numerous and their set-up can be repetitive. Luckily we can
+  factor out set-up code by implementing a method called ~setUp~, which testing
+  framework will automatically call for every test method we run.
+
+  If ~setUp~ method raises an exception while test is running, the framework
+  will consider the test to have suffered an error and test method will not be
+  executed.
+
+  Similarly we can implement ~tearDown~ that tidies up after the test method has
+  been run.
+
+  If ~setUp~ succeeds, ~tearDown~ will be run whether the test method succeeded
+  or not.
+
+  Such a working environment for test code is called a *fixture*.
+
+  TestCase instances are grouped according to feature they test. unittest
+  provide a mechanism for this: the test suite, represented by unittest's
+  ~TestSuite~ class.
+
+* ~unittest.mock~

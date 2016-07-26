@@ -28,8 +28,8 @@
    Sometimes you want to keep information associated with an entry, but normally
    you don't want to see it. For this org mode has drawers. Looks like this.
    :PROPERTIES:
-This is under drawer
-:END:
+   This is under drawer
+   :END:
    Example of ~PROPERTIES~ drawer.
    We can define *user defined drawers as defined on top of this file and used
    below.

@@ -1,0 +1,5 @@
+* General Concepts
+* Virtual Functions
+  Virtual Function support dynamic binding and object-oriented programming. A
+  class that declares or inherits a virtual function is called polymorphic
+  class. 

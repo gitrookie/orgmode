@@ -1,0 +1,5 @@
+* Libraries
+  1. gRPC
+  2. GLib
+  3. DBus
+  4. Qt

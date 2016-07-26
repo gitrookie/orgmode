@@ -1,0 +1,2 @@
+* ~__main__~
+  It is the name of the *scope* in which top level code executes.

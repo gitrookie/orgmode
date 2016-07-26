@@ -1,0 +1,103 @@
+* Translation Unit
+  Output of pre-processor is translation unit. with all the # directives
+  replaced with actual code from header and source files.
+* Forward Declaration
+* Declaration
+  A declaration introduces an identifier. This is what compiler needs to accept
+  references to that identifier. An identifier can be declared as often as we
+  want.
+* Definition
+  A definition instantiates this identifier. Its what linker needs in order to
+  link references to those entities. An identifier can be defined only once.
+* Objects
+  Any thing that can be placed in memory is an *object*. But functions are not
+  objects though they can be placed in memory.
+* Types
+  1. Object Types
+  2. Function Types
+  3. Incomplete Types
+** Standard Types
+*** Integer Types
+    Five standard *signed integer types*
+    - signed char
+    - short int
+    - int
+    - long int
+    - long long int
+    For each signed integer type there corresponds an unsigned integer type that
+    used same amount of storage and has the same alignment requirements.
+    Representation of same value in each type (signed or unsigned) is same.
+    A computation involving unsigned operands can never overflow, because a
+    result that cannot be represented by the resulting unsigned integer type is
+    reduced modulo the number that is one greater than the largest value that
+    can be represented by resulting type.
+*** Floating type
+    Three *real* floating types
+    1. float
+    2. double
+    3. long double
+    Three *complex* types
+    1. float _Complex
+    2. double _Complex
+    3. long double _Complex
+    The real floating types and Complex types are collectively called *floating
+    types* 
+*** Character Types
+    1. char
+    2. signed char
+    3. unsigned char
+    Above three are collectively called *character types*
+*** Enumeration
+    An enumeration comprises of set of named integer constants values. Each
+    distinct enumeration constitutes different enumerated type.
+*** Integer types
+    The type char, signed and unsigned integer types, enumeration are
+    collectively called *integer types*.
+*** Real Type
+    The integer and real floating type are collectively called *real types*.
+*** Arithmetic types
+    Integer and floating types are collectively called *arithmetic types*
+*** Void type
+    void comprised of empty set of values.Its an incomplete type that cannot be
+    completed. 
+*** Scalar Type
+    Pointer and arithmetic types are called scalar types.
+    Array and Structure types are called *aggregate* types.
+*** Pointer type
+    A pointer to void has same representation and alignment requirements a
+    pointer to character type. Similarly pointers to qualified and unqualified
+    version of compatible types shall have same representation and memory
+    requirements.
+*** Bit Field
+*** Trap Representation
+    
+** Representation of types
+   Except for bit fields objects are composed of continuous sequence of one or
+   more bytes.
+   Values stored in unsigned bit fields and objects of type unsigned char shall
+   be represented using pure binary notation.
+** Representation and Alignment Requirements
+   The same representation and alignment requirement are meant to imply
+   interchangeability as argument to functions, return value from functions and
+   member of unions.
+
+* Scope of an identifier
+  Identifier is a handle through which we refer to *objects*
+  1. Function
+  2. File
+  3. Block
+  4. Function Prototype
+* Linkage of identifier
+  Three kinds of linkage
+  1. External
+  2. Internal
+  3. None
+* Conversion and Casting
+  A cast is an explicit conversion from one type to another.
+* Storage Class
+  1. ~auto~
+  2. ~extern~: Functions are by default declared as ~extern~. Thus they are
+     visible across translation units.
+  3. ~static~: functions declared as static are visible in the translation unit
+     only which contains the declaration. 
+  4. ~register~

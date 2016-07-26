@@ -1,13 +1,88 @@
 * GUI Programming PyQt4/PyQt5
 ** General Concepts
-*** TODO Object Ownership
+*** Qt event Loop
+    The important thing about events is that they are not delivered as soon as
+    they are generated;they are instead queued up in an event queue and sent
+    sometime later. The dispatcher itself loops around the event queue and sends
+    queued events to their target objects and therefore it is called an event
+    loop. Conceptually, this is how an event loop looks
+
+    #+begin_src c
+      while (is_active) {
+        while (!event_queue_is_empty)
+          dispatch_next_event();
+        wait_for_more_events();
+       }
+    #+end_src
+
+    We enter Qt's event loop by running ~QCoreApplication::exec()~ this call
+    blocks until ~QCoreApplication::exit()~ or ~QCoreApplication::quit()~ are
+    called, terminating the loop.
+
+    The ~wait_for_more_events()~ blocks until some event is generated. If we
+    think about it, all that can generate events at that point is some external
+    source (dispatching for all internal events in now complete and there were
+    no more pending events in the event queue to delivery). Therefor event loop
+    can be woken up by:
+    1. window manager activity (key/mouse presses, interaction with the window
+       etc.)
+    2. sockets activity (there is some data available to read, or a socket is
+       writable without blocking, there is new incoming connection etc)
+    3. timers
+    4. events posted from other threads.
+
+    In a Unix-like system, window manager activity (i.e. X11) is notified to
+    application via sockets (Unix Domain, TCP/IP), since clients use them to
+    communicate with the X server. If we decide to implement cross-thread event
+    posting with an internal socket pair all that is left is being woken up by
+    activity on 
+    1. sockets
+    2. timers
+    which is exactly what ~select~ system call does: it watches over a set of
+    descriptors for activity and it times out if there is no activity for a
+    certain while. All Qt needs to do is converting what select returns into an
+    object of the right ~QEvent~ subclass and queue it up in the event
+    queue. This is what is inside event loop.
+*** Events as in Qt
+    An event is Qt is an object which represents something interesting has
+    happened either within an application or as a result of outside activity
+    that the application needs to know about. The main difference between an
+    *event* and *signal* is that events are targeted to a specific object in our
+    application (which decides what to do with an event), while signals are
+    emitted in the wild. From code point of view all events are instances of
+    some subclass of ~QEvent~ and all QObject-derived classes can override the
+    QObject::event() virtual method in order to receive and handle events
+    targeted to their instances.
+
+    The events are not delivered as soon as they are generated, they are instead
+    queued up in an event queue and sent sometime later. The dispatcher itself
+    loops around the event queue and sends queued events to their target
+    objects, and therefore it is called the *event loop*
+*** Event Delivery
+    When an event occurs, Qt creates an event object to represent it by
+    constructing an instance of the appropriate QEvent subclass, and delivers it
+    to particular instance of QObject(or one of it subclasses) by calling its
+    event() function. The function doesn't handle the event itself;based on the
+    type of event delivered, it calls an event handler for that specific type of
+    event and sends a response based on whether the event was accepted or
+    ignored. 
+
+    Some events, such as ~QMouseEvent~ and ~QKeyEvent~ comes from the window
+    system(X11); some, such as ~QTimerEvent~, come from other sources;some come
+    from the application itself.
+*** Event Types
+    Most event types are special classes. ~QResize~, ~QMouseEvent~, ~QKeyEvent~,
+    and ~QCloseEvent~.
+*** Event Handlers
+
+*** Object Ownership
 ** QtWidgets Module
    Any Widget can be a top-level window. But in most cases when we create a
    top-level window we subclass ~QDialog~ or ~QMainWindow~ or occassionally
-   ~QWidget~  Both ~QDialog~ and ~QMainDialog~  and indeed all PyQt's widgets
+   ~QWidget~  Both ~QDialog~ and ~QMainWindow~  and indeed all PyQt's widgets
    are derived from ~QWidget~ which is in turn derived from ~QObject~  and all
    are new style classes.
-   
+
    Every Widget (and some other QObjects) announce state changes by emitting
    "signals". These signals are usually ignored. However we can choose to take
    notice of any signals we are interested in, and we do this by identifying the
@@ -43,7 +118,10 @@
     from the list of arguments given to it. Arguments such as ~-geometry~ and
     ~-style~.
 
-    app = QApplication(sys.argv)
+    #+BEGIN_SRC python
+      app = QApplication(sys.argv)
+    #+END_SRC
+
     app.exec_() starts off the QApplication object's event loop.
 *** ~QLabel~ Class
     Present in ~QtWidgets~ Module
@@ -91,3 +169,24 @@
     response to user interaction. Smart Dialogs can have both widget level and
     form level validation. They are usually modeless with 'apply' and 'close'
     buttons 
+** QSocketNotifier
+   The QSocketNotifier class provides support for monitoring activity on file
+   descriptor. ~QSocketNotifier~ makes it possible to integrate Qt's event loop
+   with other event loops based on file descriptors. File Descriptor action is
+   detected in Qt's main event loop.
+** ~QEvent~ Class
+   The QEvent class (an abstract class) is the base class of all event
+   classes. Event Object contain event parameters. Qt's main event
+   loop(QCoreApplication::exec()) fetches *native window system events* from the
+   event queue, translates them into QEvents, and sends the translated events to
+   QObjects. 
+
+   In general events comes from underlying window system (~spontaneous()~
+   returns true) and are called spontaneous events, but it is also possible to
+   manually send events using ~QCoreApplication::sendEvent() ~ and
+   ~QCoreApplication::postEvent()~ (~spontaneous()~  returns False). These
+   ~sent~ an ~post~ events are generated by qt or by application. sent events
+   are not handled by event loop they are directly sent to the ~object~
+
+** ~QObject~ Class
+   The ~QObject~ class is the base class of all Qt Objects.

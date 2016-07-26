@@ -123,10 +123,10 @@
 # To switch between local branches.
    git checkout <branch_name>
 
-# Creates a branch named iss53. When branching its better to have things clean. 
+# Creates a branch named iss53. When branching its better to have things clean.
    git branch <branch_name>
 
-# Creates a branch named <branch_name> and switches to it. 
+# Creates a branch named <branch_name> and switches to it.
    git checkout -b <branch_name>
 
 # Creates a tracking branch named <branch_name> using remote branch
@@ -136,7 +136,7 @@
 # Merges local branch <branch_name> with master
    git merge <branch_name>
 
-# After the local branch <branch_name> has been merged with master it can be 
+# After the local branch <branch_name> has been merged with master it can be
 # deleted using above command
    git branch -d <branch_name>
 
@@ -145,12 +145,12 @@
    git checkout -b <branch_name> master
 
 # To update remote-tracking branch only. It will not update local/tracking
-# branch 
+# branch
    git fetch <branch_name>
 
 # To work on remote-tracking branch. Following will create a local branch named
 # "refactored" which will be copy of the remote-tracking branch
-# "origin/refactored" 
+# "origin/refactored"
    git checkout --track -b refactored origin/refactored
 
 # Local branch "master" will be setup to track remote branch origin/master
@@ -178,7 +178,7 @@
    Tracking Branches get their commits from *git clone, git pull and git merge*
    On *git commit* in the local tracking branch, users can then use git push to
    publish changes from their tracking branch to remote repo and remote tracking
-   branch 
+   branch.
 
    Remote Tracking Branches get their contents from git clone, git pull and git
    fetch. *git merge* updates only local tracking branch.
@@ -213,7 +213,7 @@
    git push origin <branch_name>
    -- push contents of <branch_name> to repository at GitHub
 
-   git clone https://github.com/gitrookie/gitpoject.git 
+   git clone https://github.com/gitrookie/gitpoject.git
    -- copy the whole repository from GitHub
 
    git push origin --delete <branch_name>

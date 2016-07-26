@@ -1,0 +1,12 @@
+* Interface
+  In Object Oriented languages the term /interface/ is often used to define an
+  abstract type that contains no data or code.but defines behavior as method
+  signatures. A class having code and data for all the methods corresponding to
+  that interface is said to implement that interface. Furthermore a class can
+  implement different interfaces and hence can be of different types at the same
+  time.
+  An interface is hence a *type definition*;the type of object can be defined in
+  terms of interface rather than specifying a particular class.
+  The use of interface allow programming style called *programming to
+  interface*;to base programming logic on the interfaces rather than internal
+  implementation details. It makes code more reusable.

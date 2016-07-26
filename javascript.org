@@ -11,6 +11,8 @@
   Javascript depends upon global variables for linkage. All the top level
   variables of all compliation units are tossed together in a common namespace
   called the global object.
+  JavaScript is single threaded programming language (single threaded run time)
+
 * Grammar
 ** Names
    *Names* character followed optionally by one or more characters. Names can't
@@ -31,6 +33,23 @@
    A block is set of statements wrapped in curly braces. Unlike many other
    languages a block doesn't define new scope, so variables should be defined at
    the top of fucntion not inside blocks.
+*** ~var~ Statement
+    It declares a variable optionally initializing it to a value. These
+    declarations are processed before any code is executed. The scope of
+    variable declared with ~var~ is its current *execution context* which is
+    enclosing function, or for a variable declared outside any function,
+    global. 
+
+    Assigning to an undeclared variable implicitly declares it is as a global
+    variable(it becomes property of global object).
+
+    Differences between declared and undeclared variable
+    1. Declared variables are constrained in the execution context in which they
+       are declared. Undeclared variables are always global.
+    2. Declared variables are created before any code is executed. Undeclared
+       variables don't exist until the code assigning to them is executed.
+    3. Declared variables are non configurable property of their execution
+       context(function or global). Undeclared variables can be configured.
 ** Expressions
 ** Literals
 ** Functions
@@ -53,7 +72,7 @@
    pair of curly braces surrounding zero or more name/value pairs. An object
    literal can appear any where an expression can appear.
    The *undefined* value is produced if we try to retreive non existent property
-   name. 
+   name.
 ** Prototype
    Every Object is linked to a prototype object from where it can inherit
    properties. All objects created from object literals are linked to
@@ -67,3 +86,59 @@
    It is easy to inspect an object to determine what properties it has by
    attempting to retrieve the properties and examining the value obtained. The
    *typeof* operator can be helpful in determining the type of property.
+* JavaScript Event Loop
+  JavaScript has a concurrency model based on an event loop. This model is quite
+  different than the model in other languages like C or Java.
+** Message Queue
+   A JavaScript runtime contains a *message queue*, which is list of messages to
+   be processed. To each message is associated a function. When the stack is
+   empty, a message is taken out of the queue and processed. The *processing*
+   consist of calling the associated function (and thus creating initial stack
+   frame). The message processing ends with the stack becomes empty again.
+   In the loop, the message queue is polled for the next message.
+   The messages are queued in response to external events (such as mouse being
+   clicked, receiving response to an HTTP request) given a callback function has
+   been provided.
+** Event Loop
+   The ~event loop~ got its name because of how it is usually implemented, which
+   usually resembles
+
+   #+begin_src javascript
+     while(queue.waitForMessage()) {
+         queue.processNextMessage():
+     }
+   #+end_src
+
+   ~queue.waitForMessage~ waits synchronously for a message to arrive if there
+   is none currently.
+   Event Loop looks at call stack, if it is empty looks at message queue and
+   processes the message.
+** Run to completely
+   Each message is processed completely before any other message is
+   processed. This offers some nice properties when reasoning about your
+   program, including the fact that whenever a function runs , it cannot be
+   preempted  and will run entirely before any other code runs (and can modify
+   data the function manipulates). This differs from C, for instance, where if a
+   function runs in a thread, it can be be stopped at any point to run some
+   other code in another thread.
+
+   A down side of this model is that if a message takes too long to complete,
+   the web application is unable to process user interactions like click or
+   scroll. The browser mitigates this with the "Script is taking too long to
+   run" dialog. A good practice to follow is to make message processing short
+   and if possible cut down one message into several messages.
+** Adding Messages
+   In browsers, *messages* are added any time an event occurs and there is an
+   event listener attached to it. If there is no listener, the event is lost. So
+   a click on an element with a click event handler will add a message
+   --likewise with any other event.
+
+   Calling ~setTimeout~ will add a message to the queue after the time passed as
+   second argument. If there is no other message in the queue, the message is
+   processed right away, however, if there are messages, the ~setTimeout~
+   message will have to wait for other messages to be processed. For that reason
+   the second argument indicates a minimum time and not a guaranteed time.
+** Never Blocking
+   The JavaScript Event Loop model never blocks. Handling I/O is typically
+   performed via events and callbacks, so when the application is waiting for an
+   indexed DB query, it can still process other things like user input.

@@ -1,0 +1,3 @@
+* Introduction
+  A cryptographic algorithm, plus all possible keys and all the protocol that 
+  make it work comprise a cryptosystem. *PGP* is a /hybrid/ cryptosystem.
