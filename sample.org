@@ -1,0 +1,7 @@
+#+TITLE: SAMPLE TO LEARN ORG MODE
+#+STARTUP: OVERVIEW
+* Drawers 
+:DrawerTest:
+This is inside the drawer.
+:END:
+

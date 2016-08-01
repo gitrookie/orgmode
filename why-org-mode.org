@@ -1,5 +1,5 @@
 #+TITLE: Why org-mode?
-
+#+STARTUP: OVERVIEW
 * Title slide							      :slide:
 #+BEGIN_SRC emacs-lisp-slide
 (org-show-animate '("Why org-mode is awesome!" "http://orgmode.org" "John Kitchin"))

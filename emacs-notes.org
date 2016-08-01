@@ -16,4 +16,4 @@
     (pine cones numbers (1 2 3) color "blue")
   #+END_SRC
   The property name and values can be any lisp objects but names are usually
-  symbols. 
+  symbols.
