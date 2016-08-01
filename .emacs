@@ -35,6 +35,8 @@
 (highlight-parentheses-mode)
 (if (display-graphic-p)
     (load-theme 'atom-one-dark t))
+(global-set-key (kbd "C-c C-u") 'uncomment-region)
+(global-set-key (kbd "C-c C-m") 'comment-region)
 
 ;; Haskell
 (add-hook 'haskell-mode-hook 'intero-mode)
@@ -55,3 +57,14 @@
 
 ;;Git
 (require `magit)
+
+;;Org Mode
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ditaa . t) (perl . t) (emacs-lisp . t) (python . t) (haskell . t) (C . t) (js . t)))
+(add-hook 'org-mode-hook
+          (lambda()
+            (flyspell-mode 1)))
+(defun my-org-mode-hook ()
+  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t))
+(add-hook 'org-mode-hook #'my-org-mode-hook)
