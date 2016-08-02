@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 * Introduction
   JavaScript is built on some very good ideas and few bad ones.
   The very good ideas include functions, loose typing, dynamic objects and an
@@ -143,7 +142,7 @@
    The JavaScript Event Loop model never blocks. Handling I/O is typically
    performed via events and callbacks, so when the application is waiting for an
    indexed DB query, it can still process other things like user input.
-=======
+
 * Functions
   Functions in JavaScript are objects. Objects are collection of name/value
   pairs with hidden link to prototype object. Objects produced from the object
@@ -212,4 +211,4 @@
    JavaScript provides an exception handling mechanism.
 ** Augmenting Types
    
->>>>>>> a2fabc485cb05fa2257252b317b0474cc03da9de
+
