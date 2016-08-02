@@ -26,8 +26,8 @@
  kept-old-versions 2
  version-control t)
 (setq-default fill-column 80)
-(add-hook 'text-mode-hook
-  '(lambda() (set-fill-column 80)))
+(add-hook 'prog-mode-hook `turn-on-auto-fill)
+(add-hook `text-mode-hook `turn-on-auto-fill)
 (global-flycheck-mode)
 (electric-pair-mode)
 (company-quickhelp-mode)
@@ -47,6 +47,7 @@
   (add-to-list 'company-backends 'company-jedi))
 (add-hook 'python-mode-hook 'my/python-mode-hook)
 (pyvenv-mode)
+;;(pyvenv-activate)
 (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
 (add-hook 'python-mode-hook
 	  '(lambda ()
