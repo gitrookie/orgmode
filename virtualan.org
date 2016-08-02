@@ -15,3 +15,8 @@
    4. python configure.py --qmake /usr/bin/qmake-qt5  
    5. make  
    6. make install
+* Virtual ENvironment for Python Settings
+  export WORKON_HOME=$HOME/.virtualenvs
+  export PROJECT_HOME=$HOME/Programming/py3_proj
+  export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+  source /usr/local/bin/virtualenvwrapper_lazy.sh
